@@ -17,6 +17,8 @@
       --yellow: #eab308;
       --red: #ef4444;
       --purple: #a855f7;
+      --orange: #f97316;
+      --pink: #ec4899;
     }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -28,36 +30,15 @@
     .container { max-width: 900px; margin: 0 auto; }
 
     /* Tabs */
-    .tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem;
-    }
-    .tab {
-      background: none;
-      border: none;
-      color: var(--muted);
-      padding: 0.75rem 1.25rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-      border-radius: 8px 8px 0 0;
-      transition: all 0.2s;
-    }
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; overflow-x: auto; }
+    .tab { background: none; border: none; color: var(--muted); padding: 0.75rem 1rem; cursor: pointer; font-size: 0.85rem; border-radius: 8px 8px 0 0; transition: all 0.2s; white-space: nowrap; }
     .tab:hover { color: var(--text); background: var(--card); }
     .tab.active { color: var(--accent); background: var(--card); font-weight: 600; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
     /* Header */
-    header {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
+    header { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
     header h1 { font-size: 1.25rem; color: var(--accent); margin-bottom: 0.25rem; }
     header p { color: var(--muted); font-size: 0.85rem; }
     .progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin: 1rem 0 0.5rem; overflow: hidden; }
@@ -67,51 +48,12 @@
     .quick-stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
 
     /* Cards */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-    }
-    .card h2 {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .card h2 button {
-      background: var(--accent);
-      color: var(--bg);
-      border: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1rem;
-    }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
+    .card h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.75rem; }
 
     /* Course Categories */
-    .category {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      overflow: hidden;
-    }
-    .category-header {
-      background: #222;
-      padding: 0.75rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
+    .category { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
+    .category-header { background: #222; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
     .category-header:hover { background: #2a2a2a; }
     .category-title { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
     .category-title .arrow { transition: transform 0.2s; }
@@ -121,48 +63,22 @@
     .category-courses { padding: 0.5rem; }
 
     /* Course Items */
-    .course-row {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 0.5rem;
-      margin-bottom: 0.25rem;
-      border-radius: 6px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      gap: 0.75rem;
-    }
-    .course-row input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      accent-color: var(--green);
-    }
+    .course-row { display: flex; align-items: center; padding: 0.6rem 0.5rem; margin-bottom: 0.25rem; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); gap: 0.75rem; }
     .course-row.completed { opacity: 0.5; }
     .course-row.completed .course-title { text-decoration: line-through; }
     .course-title { flex: 1; font-size: 0.9rem; }
     .course-meta { display: flex; align-items: center; gap: 0.5rem; }
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 500;
-    }
+    .badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; }
     .badge.in-progress { background: #3a3a00; color: var(--yellow); }
     .badge.transfer { background: #2a0a3a; color: var(--purple); }
     .badge.planned { background: #1a2a3a; color: var(--accent); }
     .credits { color: var(--green); font-weight: 600; font-size: 0.85rem; }
 
-    /* Grid layouts */
+    /* Grid */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
 
     /* Deadlines */
-    .deadline-item {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--border);
-      gap: 0.75rem;
-    }
+    .deadline-item { display: flex; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
     .deadline-item:last-child { border-bottom: none; }
     .urgency { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .urgency.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
@@ -174,78 +90,56 @@
     .deadline-remaining { font-size: 0.85rem; font-weight: 600; }
 
     /* Milestones */
-    .milestone-item {
-      display: flex;
-      align-items: center;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--border);
-      gap: 0.75rem;
-      cursor: pointer;
-    }
+    .milestone-item { display: flex; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
     .milestone-item:last-child { border-bottom: none; }
-    .milestone-check {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--border);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-    }
+    .milestone-check { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
     .milestone-check.done { background: var(--green); border-color: var(--green); color: var(--bg); }
 
-    /* Summary Box */
-    .summary {
-      background: var(--card);
-      border: 2px solid var(--green);
-      border-radius: 8px;
-      padding: 1rem;
-      margin-top: 1rem;
-    }
+    /* Summary */
+    .summary { background: var(--card); border: 2px solid var(--green); border-radius: 8px; padding: 1rem; margin-top: 1rem; }
     .summary h3 { color: var(--green); font-size: 0.9rem; margin-bottom: 0.75rem; }
     .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; font-size: 0.85rem; }
     .summary-stat { display: flex; justify-content: space-between; padding: 0.25rem 0; }
     .summary-stat span:last-child { font-weight: 600; color: var(--green); }
 
-    /* Delete buttons */
-    .delete-btn {
-      background: none;
-      border: none;
-      color: var(--muted);
-      cursor: pointer;
-      opacity: 0;
-      transition: opacity 0.2s;
-      font-size: 1.1rem;
-    }
-    .course-row:hover .delete-btn,
-    .deadline-item:hover .delete-btn,
-    .milestone-item:hover .delete-btn { opacity: 1; }
-    .delete-btn:hover { color: var(--red); }
+    /* Calendar */
+    .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .calendar-nav button { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+    .calendar-nav button:hover { border-color: var(--accent); }
+    .calendar-nav h2 { font-size: 1.1rem; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; }
+    .calendar-day-header { text-align: center; font-size: 0.7rem; color: var(--muted); padding: 0.5rem; text-transform: uppercase; }
+    #calendar-days { display: contents; }
+    .calendar-day { min-height: 80px; background: var(--bg); border-radius: 6px; padding: 0.3rem; display: flex; flex-direction: column; }
+    .calendar-day.other-month { opacity: 0.3; }
+    .calendar-day.today { border: 2px solid var(--accent); }
+    .calendar-day.has-events { background: #1a1a2a; }
+    .day-number { font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; }
+    .calendar-day.today .day-number { color: var(--accent); }
+    .day-events { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
+    .cal-event { font-size: 0.65rem; padding: 0.15rem 0.3rem; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cal-event.deadline { background: var(--red); color: white; }
+    .cal-event.academic { background: var(--purple); color: white; }
+    .cal-event.meeting { background: var(--accent); color: var(--bg); }
+    .cal-event.personal { background: var(--green); color: var(--bg); }
+    .cal-event.work { background: var(--orange); color: var(--bg); }
+    .cal-event.recurring { border-left: 2px solid var(--yellow); }
+    .more-events { font-size: 0.6rem; color: var(--muted); text-align: center; }
 
-    /* Modal */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100; }
-    .modal.active { display: flex; }
-    .modal-content { background: var(--card); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--border); }
-    .modal h3 { margin-bottom: 1rem; color: var(--accent); font-size: 1rem; }
-    .form-group { margin-bottom: 0.75rem; }
-    .form-group label { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted); }
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 0.9rem;
-    }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
-    .form-group small { display: block; margin-top: 0.25rem; color: var(--muted); font-size: 0.7rem; }
-    .form-group small a { color: var(--accent); }
-    .modal-buttons { display: flex; gap: 0.5rem; margin-top: 1rem; }
-    .modal-buttons button { flex: 1; padding: 0.6rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
-    .btn-cancel { background: var(--border); color: var(--text); }
-    .btn-save { background: var(--accent); color: var(--bg); font-weight: 600; }
+    /* Agenda */
+    .agenda-section { margin-top: 1.5rem; }
+    .agenda-day { margin-bottom: 1rem; }
+    .agenda-date { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+    .agenda-date.today { color: var(--green); }
+    .agenda-event { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.25rem; border-left: 3px solid var(--accent); }
+    .agenda-event.deadline { border-left-color: var(--red); }
+    .agenda-event.academic { border-left-color: var(--purple); }
+    .agenda-event.meeting { border-left-color: var(--accent); }
+    .agenda-event.personal { border-left-color: var(--green); }
+    .agenda-event.work { border-left-color: var(--orange); }
+    .agenda-time { font-size: 0.75rem; color: var(--muted); min-width: 60px; }
+    .agenda-title { flex: 1; font-size: 0.85rem; }
+    .agenda-badge { font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 3px; background: var(--border); color: var(--muted); }
 
     /* Footer */
     footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.75rem; }
@@ -258,95 +152,10 @@
     .sync-dot.error { background: var(--red); }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-    /* Calendar */
-    .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .calendar-header button {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .calendar-header button:hover { border-color: var(--accent); }
-    .calendar-header h2 { font-size: 1.1rem; min-width: 180px; text-align: center; }
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 2px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0.5rem;
-    }
-    .calendar-day-header {
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--muted);
-      padding: 0.5rem;
-      text-transform: uppercase;
-    }
-    #calendar-days {
-      display: contents;
-    }
-    .calendar-day {
-      aspect-ratio: 1;
-      background: var(--bg);
-      border-radius: 6px;
-      padding: 0.25rem;
-      cursor: pointer;
-      position: relative;
-      min-height: 60px;
-      display: flex;
-      flex-direction: column;
-    }
-    .calendar-day:hover { background: #222; }
-    .calendar-day.other-month { opacity: 0.3; }
-    .calendar-day.today { border: 2px solid var(--accent); }
-    .calendar-day.selected { background: var(--accent); color: var(--bg); }
-    .calendar-day.selected .day-number { color: var(--bg); }
-    .calendar-day.selected .event-dot { background: var(--bg); }
-    .day-number {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .day-events {
-      flex: 1;
-      overflow: hidden;
-      margin-top: 0.25rem;
-    }
-    .event-dot {
-      width: 100%;
-      font-size: 0.6rem;
-      padding: 0.1rem 0.2rem;
-      border-radius: 2px;
-      margin-bottom: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .event-dot.deadline { background: var(--red); color: white; }
-    .event-dot.event { background: var(--accent); color: var(--bg); }
-    .day-event-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.5rem;
-      background: var(--bg);
-      border-radius: 4px;
-      margin-bottom: 0.5rem;
-      border-left: 3px solid var(--accent);
-    }
-    .day-event-item.deadline { border-left-color: var(--red); }
-    .day-event-item .delete-btn { opacity: 0; }
-    .day-event-item:hover .delete-btn { opacity: 1; }
+    /* Legend */
+    .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .legend-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.7rem; color: var(--muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
   </style>
 </head>
 <body>
@@ -407,11 +216,10 @@
 
     <!-- CALENDAR TAB -->
     <div class="tab-content" id="tab-calendar">
-      <div class="calendar-header">
-        <button onclick="changeMonth(-1)">&lt;</button>
+      <div class="calendar-nav">
+        <button onclick="changeMonth(-1)">← Prev</button>
         <h2 id="calendar-month">December 2025</h2>
-        <button onclick="changeMonth(1)">&gt;</button>
-        <button onclick="goToToday()" style="margin-left: 1rem; font-size: 0.8rem;">Today</button>
+        <button onclick="changeMonth(1)">Next →</button>
       </div>
       <div class="calendar-grid">
         <div class="calendar-day-header">Sun</div>
@@ -423,11 +231,17 @@
         <div class="calendar-day-header">Sat</div>
         <div id="calendar-days"></div>
       </div>
-      <div class="card" style="margin-top: 1rem;">
-        <h2>Events for <span id="selected-date-label">today</span></h2>
-        <div id="day-events"></div>
-        <div style="margin-top: 0.75rem;">
-          <input type="text" id="new-event-input" placeholder="Add event... (press Enter)" style="width: 100%; padding: 0.6rem; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text);">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background: var(--red)"></div>Deadline</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--purple)"></div>Academic</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--accent)"></div>Meeting</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--green)"></div>Personal</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--orange)"></div>Work</div>
+      </div>
+      <div class="agenda-section">
+        <div class="card">
+          <h2>Coming Up (Next 14 Days)</h2>
+          <div id="agenda-list"></div>
         </div>
       </div>
     </div>
@@ -435,13 +249,12 @@
     <!-- COURSES TAB -->
     <div class="tab-content" id="tab-courses">
       <div id="course-categories"></div>
-      <button class="btn-save" style="width: 100%; margin-top: 1rem;" onclick="openModal('course')">+ Add Course</button>
     </div>
 
     <!-- DEADLINES TAB -->
     <div class="tab-content" id="tab-deadlines">
       <div class="card">
-        <h2>All Deadlines <button onclick="openModal('deadline')">+</button></h2>
+        <h2>All Deadlines</h2>
         <div id="all-deadlines"></div>
       </div>
     </div>
@@ -449,7 +262,7 @@
     <!-- MILESTONES TAB -->
     <div class="tab-content" id="tab-milestones">
       <div class="card">
-        <h2>All Milestones <button onclick="openModal('milestone')">+</button></h2>
+        <h2>All Milestones</h2>
         <div id="all-milestones"></div>
       </div>
     </div>
@@ -459,131 +272,35 @@
         <div class="sync-dot" id="sync-dot"></div>
         <span id="sync-text">Local only</span>
       </div>
-      <p></p>
+      <p style="margin-bottom: 0.5rem; font-size: 0.7rem;">To edit: just ask Claude</p>
       <button onclick="openModal('github')">GitHub Sync</button>
       <button onclick="exportData()">Export</button>
       <button onclick="document.getElementById('import-file').click()">Import</button>
-      <button onclick="openModal('settings')">Settings</button>
       <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
     </footer>
   </div>
 
-  <!-- MODALS -->
-  <div class="modal" id="modal-course">
-    <div class="modal-content">
-      <h3>Add Course</h3>
-      <div class="form-group">
-        <label>Course Name</label>
-        <input type="text" id="course-name" placeholder="e.g., DSE 512 - Data Sci II">
+  <!-- GitHub Modal -->
+  <div class="modal" id="modal-github" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:100;">
+    <div style="background: var(--card); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--border);">
+      <h3 style="margin-bottom: 1rem; color: var(--accent);">GitHub Sync</h3>
+      <div style="margin-bottom: 0.75rem;">
+        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Username</label>
+        <input type="text" id="gh-username" placeholder="Bryan-Nsoh" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
       </div>
-      <div class="form-group">
-        <label>Category</label>
-        <select id="course-category">
-          <option value="core">Core Requirements</option>
-          <option value="domain">ML/Domain</option>
-          <option value="breadth">Knowledge Breadth</option>
-          <option value="600level">600-Level</option>
-          <option value="seminar">Seminar</option>
-        </select>
+      <div style="margin-bottom: 0.75rem;">
+        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Repository</label>
+        <input type="text" id="gh-repo" placeholder="bryan-phd" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
       </div>
-      <div class="form-group">
-        <label>Credits</label>
-        <input type="number" id="course-credits" value="3" min="1" max="6">
+      <div style="margin-bottom: 0.75rem;">
+        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Token</label>
+        <input type="password" id="gh-token" placeholder="ghp_xxxx" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
+        <small style="color: var(--muted); font-size: 0.7rem;"><a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" style="color: var(--accent);">Create token</a></small>
       </div>
-      <div class="form-group">
-        <label>Status</label>
-        <select id="course-status">
-          <option value="planned">Planned</option>
-          <option value="in-progress">In Progress</option>
-          <option value="completed">Completed</option>
-          <option value="transfer">Transfer Credit</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Semester (optional)</label>
-        <input type="text" id="course-semester" placeholder="e.g., Fall 2025">
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closeModal('course')">Cancel</button>
-        <button class="btn-save" onclick="saveCourse()">Add</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-deadline">
-    <div class="modal-content">
-      <h3>Add Deadline</h3>
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="deadline-name" placeholder="e.g., Qualifying Exam">
-      </div>
-      <div class="form-group">
-        <label>Date</label>
-        <input type="date" id="deadline-date">
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closeModal('deadline')">Cancel</button>
-        <button class="btn-save" onclick="saveDeadline()">Add</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-milestone">
-    <div class="modal-content">
-      <h3>Add Milestone</h3>
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="milestone-name" placeholder="e.g., Proposal Defense">
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closeModal('milestone')">Cancel</button>
-        <button class="btn-save" onclick="saveMilestone()">Add</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-settings">
-    <div class="modal-content">
-      <h3>Settings</h3>
-      <div class="form-group">
-        <label>Start Date</label>
-        <input type="date" id="settings-start">
-      </div>
-      <div class="form-group">
-        <label>Expected Graduation</label>
-        <input type="date" id="settings-end">
-      </div>
-      <div class="form-group">
-        <label>Total Credits Required</label>
-        <input type="number" id="settings-credits" value="36">
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closeModal('settings')">Cancel</button>
-        <button class="btn-save" onclick="saveSettings()">Save</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="modal-github">
-    <div class="modal-content">
-      <h3>GitHub Sync</h3>
-      <div class="form-group">
-        <label>GitHub Username</label>
-        <input type="text" id="gh-username" placeholder="e.g., Bryan-Nsoh">
-      </div>
-      <div class="form-group">
-        <label>Repository Name</label>
-        <input type="text" id="gh-repo" placeholder="e.g., bryan-phd">
-      </div>
-      <div class="form-group">
-        <label>Personal Access Token</label>
-        <input type="password" id="gh-token" placeholder="ghp_xxxx">
-        <small><a href="https://github.com/settings/tokens/new?scopes=repo&description=PhD%20Tracker" target="_blank">Create token</a> (repo scope)</small>
-      </div>
-      <div class="modal-buttons">
-        <button class="btn-cancel" onclick="closeModal('github')">Cancel</button>
-        <button class="btn-cancel" onclick="disconnectGitHub()" id="gh-disconnect" style="display:none">Disconnect</button>
-        <button class="btn-save" onclick="connectGitHub()">Connect</button>
+      <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+        <button onclick="closeModal('github')" style="flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--border); color: var(--text); cursor: pointer;">Cancel</button>
+        <button onclick="disconnectGitHub()" id="gh-disconnect" style="display:none; flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--red); color: white; cursor: pointer;">Disconnect</button>
+        <button onclick="connectGitHub()" style="flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--accent); color: var(--bg); cursor: pointer; font-weight: 600;">Connect</button>
       </div>
     </div>
   </div>
@@ -603,7 +320,6 @@
         { id: "seminar", name: "Seminar", requiredCredits: 3 }
       ],
       courses: [
-        // Core - 21 credits total
         { name: "DSE 511: Data Sci & Computing I", category: "core", credits: 3, status: "in-progress", semester: "Fall 2025" },
         { name: "DSE 512: Data Sci & Computing II", category: "core", credits: 3, status: "planned", semester: "" },
         { name: "Data Analysis (CSCE 878)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
@@ -611,16 +327,12 @@
         { name: "Statistics II", category: "core", credits: 3, status: "planned", semester: "" },
         { name: "Math/Numerical (STAT 801A)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
         { name: "Adv Topics Data Mining (600-level)", category: "core", credits: 3, status: "planned", semester: "" },
-        // ML/Domain - 9 credits
         { name: "COSC 524: NLP", category: "domain", credits: 3, status: "in-progress", semester: "Fall 2025" },
         { name: "Domain Course 1", category: "domain", credits: 3, status: "planned", semester: "" },
         { name: "Domain Course 2", category: "domain", credits: 3, status: "planned", semester: "" },
-        // Knowledge Breadth - 6 credits
         { name: "Ethics/Leadership/Communication 1", category: "breadth", credits: 3, status: "planned", semester: "" },
         { name: "Ethics/Leadership/Communication 2", category: "breadth", credits: 3, status: "planned", semester: "" },
-        // 600-Level - counted from above
         { name: "Additional 600-level", category: "600level", credits: 3, status: "planned", semester: "" },
-        // Seminar - 3 semesters
         { name: "DSE 599 (Fall 2025)", category: "seminar", credits: 1, status: "in-progress", semester: "Fall 2025" },
         { name: "DSE 599 (Spring 2026)", category: "seminar", credits: 1, status: "planned", semester: "Spring 2026" },
         { name: "DSE 599 (Fall 2026)", category: "seminar", credits: 1, status: "planned", semester: "Fall 2026" }
@@ -641,14 +353,25 @@
         { name: "Dissertation Research", completed: false },
         { name: "Final Defense", completed: false }
       ],
-      events: []
+      // Events with optional time, category, and recurring
+      // category: deadline, academic, meeting, personal, work
+      // recurring: null, "weekly", "biweekly", "monthly"
+      events: [
+        { name: "Lab Meeting", date: "2025-12-13", time: "14:00", category: "meeting", recurring: "weekly" },
+        { name: "Advisor 1:1", date: "2025-12-12", time: "10:00", category: "meeting", recurring: "biweekly" }
+      ]
     };
 
     let ghConfig = JSON.parse(localStorage.getItem('bryan-phd-gh')) || null;
     let fileSha = null;
     let data = JSON.parse(localStorage.getItem('bryan-phd-data')) || defaultData;
 
-    // Tab switching
+    // Ensure events array exists
+    if (!data.events) data.events = [];
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
     function showTab(tabId) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -660,12 +383,6 @@
       document.getElementById('cat-' + id).classList.toggle('collapsed');
     }
 
-    // Calendar state
-    let currentMonth = new Date().getMonth();
-    let currentYear = new Date().getFullYear();
-    let selectedDate = new Date().toISOString().split('T')[0];
-
-    // Rendering
     function render() {
       renderHeader();
       renderCourseCategories();
@@ -685,7 +402,6 @@
       document.getElementById('timeline-bar').style.width = pct + '%';
       document.getElementById('timeline-text').textContent = pct.toFixed(0) + '% complete';
 
-      // Calculate credits
       const completed = data.courses.filter(c => c.status === 'completed').reduce((s, c) => s + c.credits, 0);
       const transferred = data.courses.filter(c => c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
       const inProgress = data.courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
@@ -696,13 +412,11 @@
       document.getElementById('transferred-stat').textContent = transferred;
       document.getElementById('in-progress-stat').textContent = inProgress;
       document.getElementById('remaining-stat').textContent = remaining;
-
       document.getElementById('sum-transferred').textContent = transferred;
       document.getElementById('sum-completed').textContent = completed;
       document.getElementById('sum-inprogress').textContent = inProgress;
       document.getElementById('sum-remaining').textContent = remaining;
 
-      // Next deadline
       const upcoming = data.deadlines
         .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
         .filter(d => d.days >= 0)
@@ -724,19 +438,16 @@
               <span class="category-credits">${completed}${inProg ? '+' + inProg : ''}/${cat.requiredCredits} cr</span>
             </div>
             <div class="category-courses">
-              ${courses.map((c, i) => {
-                const idx = data.courses.indexOf(c);
+              ${courses.map(c => {
                 const isCompleted = c.status === 'completed' || c.status === 'transfer';
                 return `
                   <div class="course-row ${isCompleted ? 'completed' : ''}">
-                    <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleCourseStatus(${idx})">
                     <span class="course-title">${c.name}</span>
                     <div class="course-meta">
                       ${c.status === 'in-progress' ? '<span class="badge in-progress">IN PROGRESS</span>' : ''}
                       ${c.status === 'transfer' ? '<span class="badge transfer">TRANSFER</span>' : ''}
                       ${c.status === 'planned' && c.semester ? `<span class="badge planned">${c.semester}</span>` : ''}
                       <span class="credits">${c.credits}cr</span>
-                      <button class="delete-btn" onclick="deleteCourse(${idx})">×</button>
                     </div>
                   </div>
                 `;
@@ -748,18 +459,11 @@
     }
 
     function renderOverview() {
-      // Current semester courses
       const current = data.courses.filter(c => c.status === 'in-progress');
       document.getElementById('current-courses').innerHTML = current.length
-        ? current.map(c => `
-            <div class="course-row">
-              <span class="course-title">${c.name}</span>
-              <span class="credits">${c.credits}cr</span>
-            </div>
-          `).join('')
+        ? current.map(c => `<div class="course-row"><span class="course-title">${c.name}</span><span class="credits">${c.credits}cr</span></div>`).join('')
         : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No courses in progress</div>';
 
-      // Upcoming deadlines (top 4)
       const today = new Date();
       const upcoming = data.deadlines
         .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
@@ -771,9 +475,8 @@
         ? upcoming.map(d => renderDeadlineItem(d)).join('')
         : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No upcoming deadlines</div>';
 
-      // Milestones
       document.getElementById('overview-milestones').innerHTML = data.milestones.map((m, i) => `
-        <div class="milestone-item" onclick="toggleMilestone(${i})">
+        <div class="milestone-item">
           <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
           <span>${m.name}</span>
         </div>
@@ -786,7 +489,6 @@
       if (d.days > 365) remaining = (d.days / 365).toFixed(1) + 'yr';
       else if (d.days > 60) remaining = (d.days / 30).toFixed(1) + 'mo';
       const dateStr = new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const idx = data.deadlines.findIndex(x => x.name === d.name && x.date === d.date);
 
       return `
         <div class="deadline-item">
@@ -796,7 +498,6 @@
             <div class="deadline-date">${dateStr}</div>
           </div>
           <div class="deadline-remaining">${remaining}</div>
-          <button class="delete-btn" onclick="deleteDeadline(${idx})">×</button>
         </div>
       `;
     }
@@ -813,122 +514,169 @@
     }
 
     function renderMilestones() {
-      document.getElementById('all-milestones').innerHTML = data.milestones.map((m, i) => `
-        <div class="milestone-item" onclick="toggleMilestone(${i})">
+      document.getElementById('all-milestones').innerHTML = data.milestones.map(m => `
+        <div class="milestone-item">
           <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
           <span>${m.name}</span>
-          <button class="delete-btn" onclick="event.stopPropagation(); deleteMilestone(${i})">×</button>
         </div>
       `).join('');
     }
 
-    // Calendar
+    // Calendar with recurring event support
+    function getEventsForDate(dateStr) {
+      const events = [];
+      const targetDate = new Date(dateStr + 'T12:00:00');
+
+      // Add deadlines
+      data.deadlines.forEach(d => {
+        if (d.date === dateStr) {
+          events.push({ name: d.name, category: 'deadline', time: null });
+        }
+      });
+
+      // Add events (with recurring logic)
+      data.events.forEach(e => {
+        if (e.date === dateStr) {
+          events.push({ name: e.name, category: e.category || 'meeting', time: e.time });
+        } else if (e.recurring) {
+          const eventDate = new Date(e.date + 'T12:00:00');
+          if (targetDate >= eventDate) {
+            const daysDiff = Math.floor((targetDate - eventDate) / 86400000);
+            let matches = false;
+
+            if (e.recurring === 'weekly' && daysDiff % 7 === 0) matches = true;
+            if (e.recurring === 'biweekly' && daysDiff % 14 === 0) matches = true;
+            if (e.recurring === 'monthly' && targetDate.getDate() === eventDate.getDate()) matches = true;
+
+            if (matches) {
+              events.push({ name: e.name, category: e.category || 'meeting', time: e.time, recurring: true });
+            }
+          }
+        }
+      });
+
+      return events.sort((a, b) => {
+        if (!a.time && !b.time) return 0;
+        if (!a.time) return 1;
+        if (!b.time) return -1;
+        return a.time.localeCompare(b.time);
+      });
+    }
+
+    function formatTime(time) {
+      if (!time) return '';
+      const [h, m] = time.split(':');
+      const hour = parseInt(h);
+      const ampm = hour >= 12 ? 'pm' : 'am';
+      const hour12 = hour % 12 || 12;
+      return `${hour12}${m !== '00' ? ':' + m : ''}${ampm}`;
+    }
+
     function renderCalendar() {
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                          'July', 'August', 'September', 'October', 'November', 'December'];
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       document.getElementById('calendar-month').textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
       const firstDay = new Date(currentYear, currentMonth, 1).getDay();
       const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
       const daysInPrevMonth = new Date(currentYear, currentMonth, 0).getDate();
-
       const today = new Date().toISOString().split('T')[0];
+
       let html = '';
 
-      // Previous month days
+      // Previous month
       for (let i = firstDay - 1; i >= 0; i--) {
         const day = daysInPrevMonth - i;
-        const dateStr = formatDate(currentYear, currentMonth - 1, day);
+        const dateStr = formatDateStr(currentYear, currentMonth - 1, day);
         html += renderCalendarDay(day, dateStr, true, today);
       }
 
-      // Current month days
+      // Current month
       for (let day = 1; day <= daysInMonth; day++) {
-        const dateStr = formatDate(currentYear, currentMonth, day);
+        const dateStr = formatDateStr(currentYear, currentMonth, day);
         html += renderCalendarDay(day, dateStr, false, today);
       }
 
-      // Next month days
+      // Next month
       const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
       const remaining = totalCells - (firstDay + daysInMonth);
       for (let day = 1; day <= remaining; day++) {
-        const dateStr = formatDate(currentYear, currentMonth + 1, day);
+        const dateStr = formatDateStr(currentYear, currentMonth + 1, day);
         html += renderCalendarDay(day, dateStr, true, today);
       }
 
       document.getElementById('calendar-days').innerHTML = html;
-      renderDayEvents();
+      renderAgenda();
     }
 
-    function formatDate(year, month, day) {
+    function formatDateStr(year, month, day) {
       const d = new Date(year, month, day);
       return d.toISOString().split('T')[0];
     }
 
     function renderCalendarDay(day, dateStr, isOtherMonth, today) {
       const isToday = dateStr === today;
-      const isSelected = dateStr === selectedDate;
       const events = getEventsForDate(dateStr);
+      const hasEvents = events.length > 0;
 
       let classes = 'calendar-day';
       if (isOtherMonth) classes += ' other-month';
       if (isToday) classes += ' today';
-      if (isSelected) classes += ' selected';
+      if (hasEvents) classes += ' has-events';
 
       let eventsHtml = '';
-      events.slice(0, 3).forEach(e => {
-        eventsHtml += `<div class="event-dot ${e.type}">${e.name}</div>`;
+      const maxShow = 3;
+      events.slice(0, maxShow).forEach(e => {
+        const recurClass = e.recurring ? ' recurring' : '';
+        const timeStr = e.time ? formatTime(e.time) + ' ' : '';
+        eventsHtml += `<div class="cal-event ${e.category}${recurClass}">${timeStr}${e.name}</div>`;
       });
-      if (events.length > 3) eventsHtml += `<div class="event-dot">+${events.length - 3}</div>`;
+      if (events.length > maxShow) {
+        eventsHtml += `<div class="more-events">+${events.length - maxShow} more</div>`;
+      }
 
       return `
-        <div class="${classes}" onclick="selectDate('${dateStr}')">
+        <div class="${classes}">
           <span class="day-number">${day}</span>
           <div class="day-events">${eventsHtml}</div>
         </div>
       `;
     }
 
-    function getEventsForDate(dateStr) {
-      const events = [];
-      // Add deadlines
-      data.deadlines.forEach(d => {
-        if (d.date === dateStr) {
-          events.push({ name: d.name, type: 'deadline' });
+    function renderAgenda() {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const days = [];
+
+      for (let i = 0; i < 14; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + i);
+        const dateStr = date.toISOString().split('T')[0];
+        const events = getEventsForDate(dateStr);
+        if (events.length > 0) {
+          days.push({ date, dateStr, events, isToday: i === 0 });
         }
-      });
-      // Add custom events
-      if (data.events) {
-        data.events.forEach(e => {
-          if (e.date === dateStr) {
-            events.push({ name: e.name, type: 'event' });
-          }
-        });
       }
-      return events;
-    }
 
-    function selectDate(dateStr) {
-      selectedDate = dateStr;
-      renderCalendar();
-    }
+      if (days.length === 0) {
+        document.getElementById('agenda-list').innerHTML = '<div style="color: var(--muted); padding: 1rem; text-align: center;">No events in the next 14 days</div>';
+        return;
+      }
 
-    function renderDayEvents() {
-      const date = new Date(selectedDate + 'T12:00:00');
-      const label = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-      document.getElementById('selected-date-label').textContent = label;
-
-      const events = getEventsForDate(selectedDate);
-      if (events.length === 0) {
-        document.getElementById('day-events').innerHTML = '<div style="color: var(--muted); padding: 0.5rem;">No events</div>';
-      } else {
-        document.getElementById('day-events').innerHTML = events.map((e, i) => `
-          <div class="day-event-item ${e.type}">
-            <span>${e.name}</span>
-            ${e.type === 'event' ? `<button class="delete-btn" onclick="deleteEvent('${selectedDate}', ${i})">×</button>` : '<span style="font-size:0.7rem;color:var(--muted)">deadline</span>'}
+      document.getElementById('agenda-list').innerHTML = days.map(d => {
+        const dayLabel = d.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        return `
+          <div class="agenda-day">
+            <div class="agenda-date ${d.isToday ? 'today' : ''}">${d.isToday ? 'Today - ' : ''}${dayLabel}</div>
+            ${d.events.map(e => `
+              <div class="agenda-event ${e.category}">
+                <span class="agenda-time">${e.time ? formatTime(e.time) : 'All day'}</span>
+                <span class="agenda-title">${e.name}</span>
+                ${e.recurring ? '<span class="agenda-badge">recurring</span>' : ''}
+              </div>
+            `).join('')}
           </div>
-        `).join('');
-      }
+        `;
+      }).join('');
     }
 
     function changeMonth(delta) {
@@ -937,109 +685,6 @@
       if (currentMonth < 0) { currentMonth = 11; currentYear--; }
       renderCalendar();
     }
-
-    function goToToday() {
-      const today = new Date();
-      currentMonth = today.getMonth();
-      currentYear = today.getFullYear();
-      selectedDate = today.toISOString().split('T')[0];
-      renderCalendar();
-    }
-
-    function addEvent(name) {
-      if (!data.events) data.events = [];
-      data.events.push({ name, date: selectedDate });
-      save();
-    }
-
-    function deleteEvent(date, index) {
-      const eventsOnDate = data.events.filter(e => e.date === date);
-      const eventToDelete = eventsOnDate[index];
-      if (eventToDelete) {
-        const globalIndex = data.events.findIndex(e => e.date === date && e.name === eventToDelete.name);
-        if (globalIndex !== -1) {
-          data.events.splice(globalIndex, 1);
-          save();
-        }
-      }
-    }
-
-    // CRUD
-    function toggleCourseStatus(i) {
-      const c = data.courses[i];
-      if (c.status === 'completed' || c.status === 'transfer') {
-        c.status = 'planned';
-      } else {
-        c.status = 'completed';
-      }
-      save();
-    }
-
-    function openModal(type) {
-      document.getElementById('modal-' + type).classList.add('active');
-      if (type === 'settings') {
-        document.getElementById('settings-start').value = data.settings.startDate;
-        document.getElementById('settings-end').value = data.settings.endDate;
-        document.getElementById('settings-credits').value = data.settings.creditsRequired;
-      }
-      if (type === 'github' && ghConfig) {
-        document.getElementById('gh-username').value = ghConfig.username;
-        document.getElementById('gh-repo').value = ghConfig.repo;
-        document.getElementById('gh-token').value = ghConfig.token;
-        document.getElementById('gh-disconnect').style.display = 'block';
-      }
-    }
-
-    function closeModal(type) {
-      document.getElementById('modal-' + type).classList.remove('active');
-    }
-
-    function saveCourse() {
-      const name = document.getElementById('course-name').value.trim();
-      const category = document.getElementById('course-category').value;
-      const credits = parseInt(document.getElementById('course-credits').value);
-      const status = document.getElementById('course-status').value;
-      const semester = document.getElementById('course-semester').value.trim();
-      if (!name) return alert('Enter course name');
-      data.courses.push({ name, category, credits, status, semester });
-      save();
-      closeModal('course');
-      document.getElementById('course-name').value = '';
-      document.getElementById('course-semester').value = '';
-    }
-
-    function saveDeadline() {
-      const name = document.getElementById('deadline-name').value.trim();
-      const date = document.getElementById('deadline-date').value;
-      if (!name || !date) return alert('Fill all fields');
-      data.deadlines.push({ name, date });
-      save();
-      closeModal('deadline');
-      document.getElementById('deadline-name').value = '';
-      document.getElementById('deadline-date').value = '';
-    }
-
-    function saveMilestone() {
-      const name = document.getElementById('milestone-name').value.trim();
-      if (!name) return alert('Enter milestone name');
-      data.milestones.push({ name, completed: false });
-      save();
-      closeModal('milestone');
-      document.getElementById('milestone-name').value = '';
-    }
-
-    function saveSettings() {
-      data.settings.startDate = document.getElementById('settings-start').value;
-      data.settings.endDate = document.getElementById('settings-end').value;
-      data.settings.creditsRequired = parseInt(document.getElementById('settings-credits').value);
-      save();
-      closeModal('settings');
-    }
-
-    function deleteCourse(i) { data.courses.splice(i, 1); save(); }
-    function deleteDeadline(i) { data.deadlines.splice(i, 1); save(); }
-    function deleteMilestone(i) { data.milestones.splice(i, 1); save(); }
-    function toggleMilestone(i) { data.milestones[i].completed = !data.milestones[i].completed; save(); }
 
     // Save & Sync
     async function save() {
@@ -1089,11 +734,26 @@
           const fileData = await res.json();
           fileSha = fileData.sha;
           data = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
+          if (!data.events) data.events = [];
           localStorage.setItem('bryan-phd-data', JSON.stringify(data));
           return true;
         }
       } catch (e) {}
       return false;
+    }
+
+    function openModal(type) {
+      document.getElementById('modal-' + type).style.display = 'flex';
+      if (type === 'github' && ghConfig) {
+        document.getElementById('gh-username').value = ghConfig.username;
+        document.getElementById('gh-repo').value = ghConfig.repo;
+        document.getElementById('gh-token').value = ghConfig.token;
+        document.getElementById('gh-disconnect').style.display = 'block';
+      }
+    }
+
+    function closeModal(type) {
+      document.getElementById('modal-' + type).style.display = 'none';
     }
 
     async function connectGitHub() {
@@ -1142,6 +802,7 @@
       reader.onload = e => {
         try {
           data = JSON.parse(e.target.result);
+          if (!data.events) data.events = [];
           save();
         } catch (err) {
           alert('Invalid JSON');
@@ -1150,20 +811,8 @@
       reader.readAsText(file);
     }
 
-    document.querySelectorAll('.modal').forEach(m => {
-      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
-    });
-
-    // Calendar event input
-    document.getElementById('new-event-input').addEventListener('keypress', e => {
-      if (e.key === 'Enter') {
-        const input = e.target;
-        const name = input.value.trim();
-        if (name) {
-          addEvent(name);
-          input.value = '';
-        }
-      }
+    document.getElementById('modal-github').addEventListener('click', e => {
+      if (e.target.id === 'modal-github') closeModal('github');
     });
 
     async function init() {
