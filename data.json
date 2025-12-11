@@ -1,0 +1,28 @@
+{
+  "settings": {
+    "program": "PhD",
+    "concentration": "Data Science & Engineering",
+    "startDate": "2024-08-01",
+    "endDate": "2028-05-15",
+    "creditsRequired": 48
+  },
+  "courses": [
+    { "name": "DSE 512 - Foundations of Data Science", "credits": 3, "semester": "Fall 2024", "grade": "A" },
+    { "name": "DSE 610 - Research Methods", "credits": 3, "semester": "Fall 2024", "grade": "A" },
+    { "name": "COSC 526 - Machine Learning", "credits": 3, "semester": "Fall 2024", "grade": "B+" }
+  ],
+  "deadlines": [
+    { "name": "Committee Meeting", "date": "2025-12-20" },
+    { "name": "Spring Registration", "date": "2026-01-10" },
+    { "name": "Qualifying Exam", "date": "2026-03-15" },
+    { "name": "Proposal Defense", "date": "2027-03-01" }
+  ],
+  "milestones": [
+    { "name": "Coursework Phase 1", "completed": true },
+    { "name": "Committee Formed", "completed": false },
+    { "name": "Qualifying Exam", "completed": false },
+    { "name": "Proposal Defense", "completed": false },
+    { "name": "Dissertation Research", "completed": false },
+    { "name": "Final Defense", "completed": false }
+  ]
+}
