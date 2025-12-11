@@ -179,14 +179,6 @@
 
     /* Footer */
     footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.75rem; }
-    footer button { background: none; border: 1px solid var(--border); color: var(--muted); padding: 0.4rem 0.75rem; border-radius: 4px; cursor: pointer; margin: 0 0.2rem; font-size: 0.75rem; }
-    footer button:hover { border-color: var(--accent); color: var(--accent); }
-    .sync-status { display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
-    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
-    .sync-dot.connected { background: var(--green); }
-    .sync-dot.syncing { background: var(--yellow); animation: pulse 1s infinite; }
-    .sync-dot.error { background: var(--red); }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
     /* Legend */
     .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
@@ -323,41 +315,8 @@
     </div>
 
     <footer>
-      <div class="sync-status">
-        <div class="sync-dot" id="sync-dot"></div>
-        <span id="sync-text">Local only</span>
-      </div>
-      <p style="margin-bottom: 0.5rem; font-size: 0.7rem;">To edit: just ask Claude</p>
-      <button onclick="openModal('github')">GitHub Sync</button>
-      <button onclick="exportData()">Export</button>
-      <button onclick="document.getElementById('import-file').click()">Import</button>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importData(event)">
+      <p>To edit: just ask Claude</p>
     </footer>
-  </div>
-
-  <!-- GitHub Modal -->
-  <div class="modal" id="modal-github" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); align-items:center; justify-content:center; z-index:100;">
-    <div style="background: var(--card); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--border);">
-      <h3 style="margin-bottom: 1rem; color: var(--accent);">GitHub Sync</h3>
-      <div style="margin-bottom: 0.75rem;">
-        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Username</label>
-        <input type="text" id="gh-username" placeholder="Bryan-Nsoh" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
-      </div>
-      <div style="margin-bottom: 0.75rem;">
-        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Repository</label>
-        <input type="text" id="gh-repo" placeholder="bryan-phd" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
-      </div>
-      <div style="margin-bottom: 0.75rem;">
-        <label style="display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted);">Token</label>
-        <input type="password" id="gh-token" placeholder="ghp_xxxx" style="width: 100%; padding: 0.6rem; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text);">
-        <small style="color: var(--muted); font-size: 0.7rem;"><a href="https://github.com/settings/tokens/new?scopes=repo" target="_blank" style="color: var(--accent);">Create token</a></small>
-      </div>
-      <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-        <button onclick="closeModal('github')" style="flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--border); color: var(--text); cursor: pointer;">Cancel</button>
-        <button onclick="disconnectGitHub()" id="gh-disconnect" style="display:none; flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--red); color: white; cursor: pointer;">Disconnect</button>
-        <button onclick="connectGitHub()" style="flex: 1; padding: 0.6rem; border: none; border-radius: 6px; background: var(--accent); color: var(--bg); cursor: pointer; font-weight: 600;">Connect</button>
-      </div>
-    </div>
   </div>
 
   <script>
@@ -417,8 +376,6 @@
       ]
     };
 
-    let ghConfig = JSON.parse(localStorage.getItem('bryan-phd-gh')) || null;
-    let fileSha = null;
     let data = JSON.parse(localStorage.getItem('bryan-phd-data')) || defaultData;
 
     // Ensure events array exists
@@ -875,145 +832,7 @@
     }
 
 
-    // Save & Sync
-    async function save() {
-      localStorage.setItem('bryan-phd-data', JSON.stringify(data));
-      render();
-      if (ghConfig) await syncToGitHub();
-    }
-
-    function updateSyncStatus(status, text) {
-      document.getElementById('sync-dot').className = 'sync-dot ' + status;
-      document.getElementById('sync-text').textContent = text;
-    }
-
-    async function syncToGitHub() {
-      if (!ghConfig) return;
-      updateSyncStatus('syncing', 'Syncing...');
-      try {
-        const { username, repo, token } = ghConfig;
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/data.json`;
-        const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
-        if (getRes.ok) fileSha = (await getRes.json()).sha;
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-        const body = { message: `Update - ${new Date().toLocaleString()}`, content, branch: 'main' };
-        if (fileSha) body.sha = fileSha;
-        const putRes = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        });
-        if (putRes.ok) {
-          fileSha = (await putRes.json()).content.sha;
-          updateSyncStatus('connected', 'Synced');
-        } else throw new Error();
-      } catch (e) {
-        updateSyncStatus('error', 'Sync failed');
-      }
-    }
-
-    async function loadFromGitHub() {
-      if (!ghConfig) return false;
-      try {
-        const { username, repo, token } = ghConfig;
-        const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/data.json`, {
-          headers: { 'Authorization': `token ${token}` }
-        });
-        if (res.ok) {
-          const fileData = await res.json();
-          fileSha = fileData.sha;
-          data = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
-          if (!data.events) data.events = [];
-          localStorage.setItem('bryan-phd-data', JSON.stringify(data));
-          return true;
-        }
-      } catch (e) {}
-      return false;
-    }
-
-    function openModal(type) {
-      document.getElementById('modal-' + type).style.display = 'flex';
-      if (type === 'github' && ghConfig) {
-        document.getElementById('gh-username').value = ghConfig.username;
-        document.getElementById('gh-repo').value = ghConfig.repo;
-        document.getElementById('gh-token').value = ghConfig.token;
-        document.getElementById('gh-disconnect').style.display = 'block';
-      }
-    }
-
-    function closeModal(type) {
-      document.getElementById('modal-' + type).style.display = 'none';
-    }
-
-    async function connectGitHub() {
-      const username = document.getElementById('gh-username').value.trim();
-      const repo = document.getElementById('gh-repo').value.trim();
-      const token = document.getElementById('gh-token').value.trim();
-      if (!username || !repo || !token) return alert('Fill all fields');
-      updateSyncStatus('syncing', 'Connecting...');
-      try {
-        const res = await fetch(`https://api.github.com/repos/${username}/${repo}`, {
-          headers: { 'Authorization': `token ${token}` }
-        });
-        if (!res.ok) throw new Error();
-        ghConfig = { username, repo, token };
-        localStorage.setItem('bryan-phd-gh', JSON.stringify(ghConfig));
-        if (await loadFromGitHub()) render();
-        else await syncToGitHub();
-        closeModal('github');
-        updateSyncStatus('connected', 'Connected');
-      } catch (e) {
-        alert('Failed to connect');
-        updateSyncStatus('error', 'Failed');
-      }
-    }
-
-    function disconnectGitHub() {
-      ghConfig = null;
-      fileSha = null;
-      localStorage.removeItem('bryan-phd-gh');
-      updateSyncStatus('', 'Local only');
-      closeModal('github');
-    }
-
-    function exportData() {
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'phd-tracker.json';
-      a.click();
-    }
-
-    function importData(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = e => {
-        try {
-          data = JSON.parse(e.target.result);
-          if (!data.events) data.events = [];
-          save();
-        } catch (err) {
-          alert('Invalid JSON');
-        }
-      };
-      reader.readAsText(file);
-    }
-
-    document.getElementById('modal-github').addEventListener('click', e => {
-      if (e.target.id === 'modal-github') closeModal('github');
-    });
-
-    async function init() {
-      if (ghConfig) {
-        updateSyncStatus('syncing', 'Loading...');
-        if (await loadFromGitHub()) updateSyncStatus('connected', 'Connected');
-        else updateSyncStatus('connected', 'Connected');
-      }
-      render();
-    }
-
-    init();
+    render();
   </script>
 </body>
 </html>
