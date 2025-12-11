@@ -106,6 +106,42 @@
     .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
     .calendar-nav button { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
     .calendar-nav button:hover { border-color: var(--accent); }
+    .calendar-nav button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+    /* Year View */
+    .year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+    @media (max-width: 600px) { .year-grid { grid-template-columns: repeat(3, 1fr); } }
+    .month-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s; }
+    .month-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .month-card.selected { border-color: var(--accent); background: #1a2a3a; }
+    .month-card.current { border-color: var(--green); }
+    .month-card-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .month-card.current .month-card-name { color: var(--green); }
+    .month-card-count { font-size: 0.75rem; color: var(--muted); }
+    .month-card-count span { display: inline-block; margin-right: 0.5rem; }
+    .month-card-count .deadlines { color: var(--red); }
+    .month-card-count .events { color: var(--accent); }
+
+    /* Month Detail */
+    .month-detail { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .month-detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+    .month-detail-header h3 { font-size: 1rem; color: var(--accent); }
+    .month-detail-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; }
+    .month-detail-close:hover { color: var(--text); }
+    .month-event-list { max-height: 400px; overflow-y: auto; }
+    .month-event-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); }
+    .month-event-item.deadline { border-left-color: var(--red); }
+    .month-event-item.academic { border-left-color: var(--purple); }
+    .month-event-item.meeting { border-left-color: var(--accent); }
+    .month-event-item.personal { border-left-color: var(--green); }
+    .month-event-item.work { border-left-color: var(--orange); }
+    .month-event-item.admin { border-left-color: var(--yellow); }
+    .month-event-item.milestone { border-left-color: var(--pink); }
+    .month-event-date { min-width: 45px; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .month-event-info { flex: 1; }
+    .month-event-name { font-size: 0.9rem; font-weight: 500; }
+    .month-event-time { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+    .month-event-badge { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 3px; background: var(--border); color: var(--muted); margin-left: 0.5rem; }
     .calendar-nav h2 { font-size: 1.1rem; }
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; }
     .calendar-day-header { text-align: center; font-size: 0.7rem; color: var(--muted); padding: 0.5rem; text-transform: uppercase; }
@@ -217,26 +253,45 @@
     <!-- CALENDAR TAB -->
     <div class="tab-content" id="tab-calendar">
       <div class="calendar-nav">
-        <button onclick="changeMonth(-1)">← Prev</button>
-        <h2 id="calendar-month">December 2025</h2>
-        <button onclick="changeMonth(1)">Next →</button>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="view-year" class="active" onclick="setCalendarView('year')">Year</button>
+          <button id="view-month" onclick="setCalendarView('month')">Month</button>
+        </div>
+        <h2 id="calendar-title">2025</h2>
+        <div style="display: flex; gap: 0.5rem;">
+          <button onclick="changeCalendarPeriod(-1)">← Prev</button>
+          <button onclick="changeCalendarPeriod(1)">Next →</button>
+        </div>
       </div>
-      <div class="calendar-grid">
-        <div class="calendar-day-header">Sun</div>
-        <div class="calendar-day-header">Mon</div>
-        <div class="calendar-day-header">Tue</div>
-        <div class="calendar-day-header">Wed</div>
-        <div class="calendar-day-header">Thu</div>
-        <div class="calendar-day-header">Fri</div>
-        <div class="calendar-day-header">Sat</div>
-        <div id="calendar-days"></div>
+
+      <!-- Year View -->
+      <div id="year-view">
+        <div class="year-grid" id="year-grid"></div>
+        <div id="month-detail-container"></div>
       </div>
+
+      <!-- Month View (hidden by default) -->
+      <div id="month-view" style="display: none;">
+        <div class="calendar-grid">
+          <div class="calendar-day-header">Sun</div>
+          <div class="calendar-day-header">Mon</div>
+          <div class="calendar-day-header">Tue</div>
+          <div class="calendar-day-header">Wed</div>
+          <div class="calendar-day-header">Thu</div>
+          <div class="calendar-day-header">Fri</div>
+          <div class="calendar-day-header">Sat</div>
+          <div id="calendar-days"></div>
+        </div>
+      </div>
+
       <div class="legend">
         <div class="legend-item"><div class="legend-dot" style="background: var(--red)"></div>Deadline</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--purple)"></div>Academic</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--accent)"></div>Meeting</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--green)"></div>Personal</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--orange)"></div>Work</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--yellow)"></div>Admin</div>
+        <div class="legend-item"><div class="legend-dot" style="background: var(--pink)"></div>Milestone</div>
       </div>
       <div class="agenda-section">
         <div class="card">
@@ -371,6 +426,8 @@
 
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
+    let calendarView = 'year'; // 'year' or 'month'
+    let selectedMonthDetail = null;
 
     function showTab(tabId) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -522,6 +579,138 @@
       `).join('');
     }
 
+    // Calendar view toggle
+    function setCalendarView(view) {
+      calendarView = view;
+      document.getElementById('view-year').classList.toggle('active', view === 'year');
+      document.getElementById('view-month').classList.toggle('active', view === 'month');
+      document.getElementById('year-view').style.display = view === 'year' ? 'block' : 'none';
+      document.getElementById('month-view').style.display = view === 'month' ? 'block' : 'none';
+      renderCalendar();
+    }
+
+    function changeCalendarPeriod(delta) {
+      if (calendarView === 'year') {
+        currentYear += delta;
+      } else {
+        currentMonth += delta;
+        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      }
+      renderCalendar();
+    }
+
+    // Get all events for a month (including recurring)
+    function getAllEventsForMonth(year, month) {
+      const events = [];
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = formatDateStr(year, month, day);
+        const dayEvents = getEventsForDate(dateStr);
+        dayEvents.forEach(e => {
+          events.push({ ...e, date: dateStr, day });
+        });
+      }
+
+      return events.sort((a, b) => a.day - b.day || (a.time || '99:99').localeCompare(b.time || '99:99'));
+    }
+
+    // Render year view
+    function renderYearView() {
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const today = new Date();
+      const currentMonthIndex = today.getMonth();
+      const currentYearIndex = today.getFullYear();
+
+      document.getElementById('calendar-title').textContent = currentYear;
+
+      let html = '';
+      for (let m = 0; m < 12; m++) {
+        const events = getAllEventsForMonth(currentYear, m);
+        const deadlineCount = events.filter(e => e.category === 'deadline' || e.category === 'milestone').length;
+        const otherCount = events.length - deadlineCount;
+        const isCurrent = (m === currentMonthIndex && currentYear === currentYearIndex);
+        const isSelected = (selectedMonthDetail === m);
+
+        html += `
+          <div class="month-card ${isCurrent ? 'current' : ''} ${isSelected ? 'selected' : ''}" onclick="showMonthDetail(${m})">
+            <div class="month-card-name">${monthNames[m]}</div>
+            <div class="month-card-count">
+              ${deadlineCount > 0 ? `<span class="deadlines">${deadlineCount} deadline${deadlineCount > 1 ? 's' : ''}</span>` : ''}
+              ${otherCount > 0 ? `<span class="events">${otherCount} event${otherCount > 1 ? 's' : ''}</span>` : ''}
+              ${events.length === 0 ? '<span>No events</span>' : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById('year-grid').innerHTML = html;
+
+      // Render month detail if selected
+      if (selectedMonthDetail !== null) {
+        renderMonthDetail(selectedMonthDetail);
+      }
+    }
+
+    function showMonthDetail(month) {
+      if (selectedMonthDetail === month) {
+        selectedMonthDetail = null;
+        document.getElementById('month-detail-container').innerHTML = '';
+        document.querySelectorAll('.month-card').forEach(c => c.classList.remove('selected'));
+      } else {
+        selectedMonthDetail = month;
+        renderYearView();
+      }
+    }
+
+    function renderMonthDetail(month) {
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const events = getAllEventsForMonth(currentYear, month);
+
+      if (events.length === 0) {
+        document.getElementById('month-detail-container').innerHTML = `
+          <div class="month-detail">
+            <div class="month-detail-header">
+              <h3>${monthNames[month]} ${currentYear}</h3>
+              <button class="month-detail-close" onclick="showMonthDetail(${month})">×</button>
+            </div>
+            <div style="color: var(--muted); padding: 1rem; text-align: center;">No events this month</div>
+          </div>
+        `;
+        return;
+      }
+
+      const eventsHtml = events.map(e => {
+        const dateObj = new Date(e.date + 'T12:00:00');
+        const dayStr = dateObj.getDate();
+        const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+
+        return `
+          <div class="month-event-item ${e.category}">
+            <div class="month-event-date">${dayName}<br>${dayStr}</div>
+            <div class="month-event-info">
+              <div class="month-event-name">
+                ${e.name}
+                ${e.recurring ? '<span class="month-event-badge">recurring</span>' : ''}
+              </div>
+              ${e.time ? `<div class="month-event-time">${formatTime(e.time)}</div>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('month-detail-container').innerHTML = `
+        <div class="month-detail">
+          <div class="month-detail-header">
+            <h3>${monthNames[month]} ${currentYear} — ${events.length} event${events.length > 1 ? 's' : ''}</h3>
+            <button class="month-detail-close" onclick="showMonthDetail(${month})">×</button>
+          </div>
+          <div class="month-event-list">${eventsHtml}</div>
+        </div>
+      `;
+    }
+
     // Calendar with recurring event support
     function getEventsForDate(dateStr) {
       const events = [];
@@ -573,8 +762,14 @@
     }
 
     function renderCalendar() {
+      if (calendarView === 'year') {
+        renderYearView();
+        renderAgenda();
+        return;
+      }
+
       const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      document.getElementById('calendar-month').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+      document.getElementById('calendar-title').textContent = `${monthNames[currentMonth]} ${currentYear}`;
 
       const firstDay = new Date(currentYear, currentMonth, 1).getDay();
       const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -679,12 +874,6 @@
       }).join('');
     }
 
-    function changeMonth(delta) {
-      currentMonth += delta;
-      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-      renderCalendar();
-    }
 
     // Save & Sync
     async function save() {
