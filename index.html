@@ -3,172 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bredesen Center - Progress Tracker</title>
+  <title>DSE PhD Tracker</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --border: #334155;
-      --text: #f1f5f9;
-      --muted: #94a3b8;
+      --bg: #0a0a0a;
+      --card: #1a1a1a;
+      --border: #333;
+      --text: #fff;
+      --muted: #888;
       --accent: #38bdf8;
       --green: #22c55e;
       --yellow: #eab308;
       --red: #ef4444;
+      --purple: #a855f7;
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      padding: 2rem;
+      padding: 1rem;
     }
-
     .container { max-width: 900px; margin: 0 auto; }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      padding: 2rem;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-    }
-
-    header h1 {
-      font-size: 1.5rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    header p { color: var(--muted); font-size: 0.9rem; }
-
-    .progress-container {
-      margin-top: 1.5rem;
-    }
-
-    .progress-label {
+    /* Tabs */
+    .tabs {
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    .progress-bar {
-      height: 12px;
-      background: var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--green));
-      border-radius: 6px;
-      transition: width 0.5s ease;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
+      gap: 0.5rem;
       margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
     }
+    .tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      padding: 0.75rem 1.25rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: var(--text); background: var(--card); }
+    .tab.active { color: var(--accent); background: var(--card); font-weight: 600; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
 
-    .card {
+    /* Header */
+    header {
       background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 1.5rem;
-      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
     }
+    header h1 { font-size: 1.25rem; color: var(--accent); margin-bottom: 0.25rem; }
+    header p { color: var(--muted); font-size: 0.85rem; }
+    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin: 1rem 0 0.5rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); transition: width 0.5s; }
+    .quick-stats { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .quick-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+    .quick-stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
 
+    /* Cards */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
     .card h2 {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--muted);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-
     .card h2 button {
       background: var(--accent);
       color: var(--bg);
       border: none;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       cursor: pointer;
       font-size: 1rem;
-      line-height: 1;
     }
 
-    .card h2 button:hover { opacity: 0.8; }
-
-    .stat-big {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--accent);
+    /* Course Categories */
+    .category {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
     }
-
-    .stat-big span {
-      font-size: 1.2rem;
-      color: var(--muted);
+    .category-header {
+      background: #222;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
     }
+    .category-header:hover { background: #2a2a2a; }
+    .category-title { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+    .category-title .arrow { transition: transform 0.2s; }
+    .category.collapsed .arrow { transform: rotate(-90deg); }
+    .category.collapsed .category-courses { display: none; }
+    .category-credits { font-size: 0.8rem; color: var(--muted); }
+    .category-courses { padding: 0.5rem; }
 
-    .deadline-item, .course-item, .milestone-item {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--border);
+    /* Course Items */
+    .course-row {
       display: flex;
       align-items: center;
+      padding: 0.6rem 0.5rem;
+      margin-bottom: 0.25rem;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
       gap: 0.75rem;
     }
-
-    .deadline-item:last-child, .course-item:last-child, .milestone-item:last-child {
-      border-bottom: none;
+    .course-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--green);
     }
-
-    .urgency {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    .urgency.red { background: var(--red); box-shadow: 0 0 8px var(--red); }
-    .urgency.yellow { background: var(--yellow); box-shadow: 0 0 8px var(--yellow); }
-    .urgency.green { background: var(--green); }
-
-    .deadline-info { flex: 1; }
-    .deadline-name { font-weight: 500; }
-    .deadline-date { font-size: 0.8rem; color: var(--muted); }
-    .deadline-remaining {
-      font-size: 0.85rem;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .course-item { justify-content: space-between; }
-    .course-name { flex: 1; }
-    .course-credits {
-      background: var(--border);
-      padding: 0.25rem 0.5rem;
+    .course-row.completed { opacity: 0.5; }
+    .course-row.completed .course-title { text-decoration: line-through; }
+    .course-title { flex: 1; font-size: 0.9rem; }
+    .course-meta { display: flex; align-items: center; gap: 0.5rem; }
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      font-size: 0.8rem;
+      font-weight: 500;
     }
-    .course-grade {
-      font-weight: 600;
-      color: var(--green);
-      width: 30px;
-      text-align: right;
-    }
+    .badge.in-progress { background: #3a3a00; color: var(--yellow); }
+    .badge.transfer { background: #2a0a3a; color: var(--purple); }
+    .badge.planned { background: #1a2a3a; color: var(--accent); }
+    .credits { color: var(--green); font-weight: 600; font-size: 0.85rem; }
 
-    .milestone-item { cursor: pointer; }
+    /* Grid layouts */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+
+    /* Deadlines */
+    .deadline-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      gap: 0.75rem;
+    }
+    .deadline-item:last-child { border-bottom: none; }
+    .urgency { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .urgency.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+    .urgency.yellow { background: var(--yellow); }
+    .urgency.green { background: var(--green); }
+    .deadline-info { flex: 1; }
+    .deadline-name { font-weight: 500; font-size: 0.9rem; }
+    .deadline-date { font-size: 0.75rem; color: var(--muted); }
+    .deadline-remaining { font-size: 0.85rem; font-weight: 600; }
+
+    /* Milestones */
+    .milestone-item {
+      display: flex;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+    .milestone-item:last-child { border-bottom: none; }
     .milestone-check {
       width: 20px;
       height: 20px;
@@ -177,251 +191,149 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--green);
-      flex-shrink: 0;
+      font-size: 0.8rem;
     }
-    .milestone-check.done {
-      background: var(--green);
-      border-color: var(--green);
-      color: var(--bg);
-    }
+    .milestone-check.done { background: var(--green); border-color: var(--green); color: var(--bg); }
 
+    /* Summary Box */
+    .summary {
+      background: var(--card);
+      border: 2px solid var(--green);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    .summary h3 { color: var(--green); font-size: 0.9rem; margin-bottom: 0.75rem; }
+    .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; font-size: 0.85rem; }
+    .summary-stat { display: flex; justify-content: space-between; padding: 0.25rem 0; }
+    .summary-stat span:last-child { font-weight: 600; color: var(--green); }
+
+    /* Delete buttons */
     .delete-btn {
       background: none;
       border: none;
       color: var(--muted);
       cursor: pointer;
-      padding: 0.25rem;
       opacity: 0;
       transition: opacity 0.2s;
+      font-size: 1.1rem;
     }
-
+    .course-row:hover .delete-btn,
     .deadline-item:hover .delete-btn,
-    .course-item:hover .delete-btn,
-    .milestone-item:hover .delete-btn {
-      opacity: 1;
-    }
-
+    .milestone-item:hover .delete-btn { opacity: 1; }
     .delete-btn:hover { color: var(--red); }
 
     /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
-
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100; }
     .modal.active { display: flex; }
-
-    .modal-content {
-      background: var(--card);
-      padding: 2rem;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 400px;
-      border: 1px solid var(--border);
-    }
-
-    .modal h3 {
-      margin-bottom: 1.5rem;
-      color: var(--accent);
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
-
+    .modal-content { background: var(--card); padding: 1.5rem; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid var(--border); }
+    .modal h3 { margin-bottom: 1rem; color: var(--accent); font-size: 1rem; }
+    .form-group { margin-bottom: 0.75rem; }
+    .form-group label { display: block; margin-bottom: 0.25rem; font-size: 0.8rem; color: var(--muted); }
     .form-group input, .form-group select {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.6rem;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 6px;
       background: var(--bg);
       color: var(--text);
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+    .form-group small { display: block; margin-top: 0.25rem; color: var(--muted); font-size: 0.7rem; }
+    .form-group small a { color: var(--accent); }
+    .modal-buttons { display: flex; gap: 0.5rem; margin-top: 1rem; }
+    .modal-buttons button { flex: 1; padding: 0.6rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+    .btn-cancel { background: var(--border); color: var(--text); }
+    .btn-save { background: var(--accent); color: var(--bg); font-weight: 600; }
 
-    .form-group input:focus, .form-group select:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .modal-buttons button {
-      flex: 1;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .btn-cancel {
-      background: var(--border);
-      color: var(--text);
-    }
-
-    .btn-save {
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: 600;
-    }
-
-    .btn-save:hover { opacity: 0.9; }
-
-    .quick-stats {
-      display: flex;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .quick-stat {
-      text-align: center;
-    }
-
-    .quick-stat-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .quick-stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
-
-    footer button {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin: 0 0.25rem;
-    }
-
-    footer button:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 2rem;
-      color: var(--muted);
-    }
-
-    .sync-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .sync-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--muted);
-    }
-
+    /* Footer */
+    footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.75rem; }
+    footer button { background: none; border: 1px solid var(--border); color: var(--muted); padding: 0.4rem 0.75rem; border-radius: 4px; cursor: pointer; margin: 0 0.2rem; font-size: 0.75rem; }
+    footer button:hover { border-color: var(--accent); color: var(--accent); }
+    .sync-status { display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem; }
+    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
     .sync-dot.connected { background: var(--green); }
     .sync-dot.syncing { background: var(--yellow); animation: pulse 1s infinite; }
     .sync-dot.error { background: var(--red); }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    .form-group small {
-      display: block;
-      margin-top: 0.25rem;
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
-
-    .form-group small a {
-      color: var(--accent);
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>BREDESEN CENTER</h1>
-      <p id="program-info">PhD in Data Science & Engineering</p>
-
-      <div class="progress-container">
-        <div class="progress-label">
-          <span>Program Timeline</span>
-          <span id="timeline-text">0% complete</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="timeline-bar" style="width: 0%"></div>
-        </div>
+      <h1>DSE PhD TRACKER</h1>
+      <p id="program-info">Data Science & Engineering • Bredesen Center</p>
+      <div class="progress-bar"><div class="progress-fill" id="timeline-bar" style="width: 0%"></div></div>
+      <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted);">
+        <span>Started: Fall 2025</span>
+        <span id="timeline-text">0%</span>
+        <span>Target: Spring 2029</span>
       </div>
-
       <div class="quick-stats">
-        <div class="quick-stat">
-          <div class="quick-stat-value" id="credits-stat">0/48</div>
-          <div class="quick-stat-label">Credits</div>
-        </div>
-        <div class="quick-stat">
-          <div class="quick-stat-value" id="milestones-stat">0/6</div>
-          <div class="quick-stat-label">Milestones</div>
-        </div>
-        <div class="quick-stat">
-          <div class="quick-stat-value" id="next-deadline-stat">--</div>
-          <div class="quick-stat-label">Days to Next</div>
-        </div>
-        <div class="quick-stat">
-          <div class="quick-stat-value" id="gpa-stat">--</div>
-          <div class="quick-stat-label">GPA</div>
-        </div>
+        <div><div class="quick-stat-value" id="credits-stat">0/36</div><div class="quick-stat-label">Credits</div></div>
+        <div><div class="quick-stat-value" id="transferred-stat">6</div><div class="quick-stat-label">Transferred</div></div>
+        <div><div class="quick-stat-value" id="in-progress-stat">0</div><div class="quick-stat-label">In Progress</div></div>
+        <div><div class="quick-stat-value" id="remaining-stat">0</div><div class="quick-stat-label">Remaining</div></div>
+        <div><div class="quick-stat-value" id="next-deadline-stat">--</div><div class="quick-stat-label">Days to Next</div></div>
       </div>
     </header>
 
-    <div class="grid">
-      <div class="card">
-        <h2>Credits <button onclick="openModal('course')">+</button></h2>
-        <div id="courses-list"></div>
-      </div>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('overview')">Overview</button>
+      <button class="tab" onclick="showTab('courses')">Courses</button>
+      <button class="tab" onclick="showTab('deadlines')">Deadlines</button>
+      <button class="tab" onclick="showTab('milestones')">Milestones</button>
+    </div>
 
+    <!-- OVERVIEW TAB -->
+    <div class="tab-content active" id="tab-overview">
+      <div class="grid">
+        <div class="card">
+          <h2>Current Semester</h2>
+          <div id="current-courses"></div>
+        </div>
+        <div class="card">
+          <h2>Upcoming Deadlines</h2>
+          <div id="upcoming-deadlines"></div>
+        </div>
+      </div>
       <div class="card">
-        <h2>Deadlines <button onclick="openModal('deadline')">+</button></h2>
-        <div id="deadlines-list"></div>
+        <h2>Milestones</h2>
+        <div id="overview-milestones"></div>
+      </div>
+      <div class="summary">
+        <h3>CREDIT BREAKDOWN</h3>
+        <div class="summary-stats">
+          <div class="summary-stat"><span>Total Required</span><span>36</span></div>
+          <div class="summary-stat"><span>Transferred</span><span id="sum-transferred">6</span></div>
+          <div class="summary-stat"><span>Completed</span><span id="sum-completed">0</span></div>
+          <div class="summary-stat"><span>In Progress</span><span id="sum-inprogress">0</span></div>
+          <div class="summary-stat"><span>Remaining</span><span id="sum-remaining">0</span></div>
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <h2>Milestones <button onclick="openModal('milestone')">+</button></h2>
-      <div id="milestones-list"></div>
+    <!-- COURSES TAB -->
+    <div class="tab-content" id="tab-courses">
+      <div id="course-categories"></div>
+      <button class="btn-save" style="width: 100%; margin-top: 1rem;" onclick="openModal('course')">+ Add Course</button>
+    </div>
+
+    <!-- DEADLINES TAB -->
+    <div class="tab-content" id="tab-deadlines">
+      <div class="card">
+        <h2>All Deadlines <button onclick="openModal('deadline')">+</button></h2>
+        <div id="all-deadlines"></div>
+      </div>
+    </div>
+
+    <!-- MILESTONES TAB -->
+    <div class="tab-content" id="tab-milestones">
+      <div class="card">
+        <h2>All Milestones <button onclick="openModal('milestone')">+</button></h2>
+        <div id="all-milestones"></div>
+      </div>
     </div>
 
     <footer>
@@ -438,39 +350,44 @@
     </footer>
   </div>
 
-  <!-- Modals -->
+  <!-- MODALS -->
   <div class="modal" id="modal-course">
     <div class="modal-content">
       <h3>Add Course</h3>
       <div class="form-group">
         <label>Course Name</label>
-        <input type="text" id="course-name" placeholder="e.g., DSE 512 - Foundations">
+        <input type="text" id="course-name" placeholder="e.g., DSE 512 - Data Sci II">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="course-category">
+          <option value="core">Core Requirements</option>
+          <option value="domain">ML/Domain</option>
+          <option value="breadth">Knowledge Breadth</option>
+          <option value="600level">600-Level</option>
+          <option value="seminar">Seminar</option>
+        </select>
       </div>
       <div class="form-group">
         <label>Credits</label>
         <input type="number" id="course-credits" value="3" min="1" max="6">
       </div>
       <div class="form-group">
-        <label>Semester</label>
-        <input type="text" id="course-semester" placeholder="e.g., Fall 2024">
+        <label>Status</label>
+        <select id="course-status">
+          <option value="planned">Planned</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
+          <option value="transfer">Transfer Credit</option>
+        </select>
       </div>
       <div class="form-group">
-        <label>Grade</label>
-        <select id="course-grade">
-          <option value="">In Progress</option>
-          <option value="A">A</option>
-          <option value="A-">A-</option>
-          <option value="B+">B+</option>
-          <option value="B">B</option>
-          <option value="B-">B-</option>
-          <option value="C+">C+</option>
-          <option value="C">C</option>
-          <option value="P">Pass</option>
-        </select>
+        <label>Semester (optional)</label>
+        <input type="text" id="course-semester" placeholder="e.g., Fall 2025">
       </div>
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="closeModal('course')">Cancel</button>
-        <button class="btn-save" onclick="saveCourse()">Add Course</button>
+        <button class="btn-save" onclick="saveCourse()">Add</button>
       </div>
     </div>
   </div>
@@ -488,7 +405,7 @@
       </div>
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="closeModal('deadline')">Cancel</button>
-        <button class="btn-save" onclick="saveDeadline()">Add Deadline</button>
+        <button class="btn-save" onclick="saveDeadline()">Add</button>
       </div>
     </div>
   </div>
@@ -502,7 +419,7 @@
       </div>
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="closeModal('milestone')">Cancel</button>
-        <button class="btn-save" onclick="saveMilestone()">Add Milestone</button>
+        <button class="btn-save" onclick="saveMilestone()">Add</button>
       </div>
     </div>
   </div>
@@ -510,17 +427,6 @@
   <div class="modal" id="modal-settings">
     <div class="modal-content">
       <h3>Settings</h3>
-      <div class="form-group">
-        <label>Program</label>
-        <select id="settings-program">
-          <option value="PhD">PhD</option>
-          <option value="MS">MS</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Concentration</label>
-        <input type="text" id="settings-concentration" placeholder="e.g., Data Science & Engineering">
-      </div>
       <div class="form-group">
         <label>Start Date</label>
         <input type="date" id="settings-start">
@@ -531,7 +437,7 @@
       </div>
       <div class="form-group">
         <label>Total Credits Required</label>
-        <input type="number" id="settings-credits" value="48">
+        <input type="number" id="settings-credits" value="36">
       </div>
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="closeModal('settings')">Cancel</button>
@@ -543,25 +449,18 @@
   <div class="modal" id="modal-github">
     <div class="modal-content">
       <h3>GitHub Sync</h3>
-      <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem;">
-        Sync your data to a GitHub repo so edits persist across devices.
-      </p>
       <div class="form-group">
         <label>GitHub Username</label>
-        <input type="text" id="gh-username" placeholder="e.g., johndoe">
+        <input type="text" id="gh-username" placeholder="e.g., Bryan-Nsoh">
       </div>
       <div class="form-group">
         <label>Repository Name</label>
-        <input type="text" id="gh-repo" placeholder="e.g., bredesen-tracker">
+        <input type="text" id="gh-repo" placeholder="e.g., bryan-phd">
       </div>
       <div class="form-group">
         <label>Personal Access Token</label>
-        <input type="password" id="gh-token" placeholder="ghp_xxxxxxxxxxxx">
-        <small>
-          <a href="https://github.com/settings/tokens/new?scopes=repo&description=Bredesen%20Tracker" target="_blank">
-            Create token here
-          </a> (select "repo" scope)
-        </small>
+        <input type="password" id="gh-token" placeholder="ghp_xxxx">
+        <small><a href="https://github.com/settings/tokens/new?scopes=repo&description=PhD%20Tracker" target="_blank">Create token</a> (repo scope)</small>
       </div>
       <div class="modal-buttons">
         <button class="btn-cancel" onclick="closeModal('github')">Cancel</button>
@@ -572,295 +471,224 @@
   </div>
 
   <script>
-    // Default data
     const defaultData = {
       settings: {
-        program: "PhD",
-        concentration: "Data Science & Engineering",
-        startDate: "2024-08-01",
-        endDate: "2028-05-15",
-        creditsRequired: 48
+        startDate: "2025-08-01",
+        endDate: "2029-05-15",
+        creditsRequired: 36
       },
+      courseCategories: [
+        { id: "core", name: "Core Requirements", requiredCredits: 21 },
+        { id: "domain", name: "ML/Domain", requiredCredits: 9 },
+        { id: "breadth", name: "Knowledge Breadth", requiredCredits: 6 },
+        { id: "600level", name: "600-Level Requirement", requiredCredits: 6 },
+        { id: "seminar", name: "Seminar", requiredCredits: 3 }
+      ],
       courses: [
-        { name: "DSE 512 - Foundations of Data Science", credits: 3, semester: "Fall 2024", grade: "A" },
-        { name: "DSE 610 - Research Methods", credits: 3, semester: "Fall 2024", grade: "A" },
-        { name: "COSC 526 - Machine Learning", credits: 3, semester: "Fall 2024", grade: "B+" }
+        // Core - 21 credits total
+        { name: "DSE 511: Data Sci & Computing I", category: "core", credits: 3, status: "in-progress", semester: "Fall 2025" },
+        { name: "DSE 512: Data Sci & Computing II", category: "core", credits: 3, status: "planned", semester: "" },
+        { name: "Data Analysis (CSCE 878)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
+        { name: "Statistics I (STAT 563)", category: "core", credits: 3, status: "in-progress", semester: "Fall 2025" },
+        { name: "Statistics II", category: "core", credits: 3, status: "planned", semester: "" },
+        { name: "Math/Numerical (STAT 801A)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
+        { name: "Adv Topics Data Mining (600-level)", category: "core", credits: 3, status: "planned", semester: "" },
+        // ML/Domain - 9 credits
+        { name: "COSC 524: NLP", category: "domain", credits: 3, status: "in-progress", semester: "Fall 2025" },
+        { name: "Domain Course 1", category: "domain", credits: 3, status: "planned", semester: "" },
+        { name: "Domain Course 2", category: "domain", credits: 3, status: "planned", semester: "" },
+        // Knowledge Breadth - 6 credits
+        { name: "Ethics/Leadership/Communication 1", category: "breadth", credits: 3, status: "planned", semester: "" },
+        { name: "Ethics/Leadership/Communication 2", category: "breadth", credits: 3, status: "planned", semester: "" },
+        // 600-Level - counted from above
+        { name: "Additional 600-level", category: "600level", credits: 3, status: "planned", semester: "" },
+        // Seminar - 3 semesters
+        { name: "DSE 599 (Fall 2025)", category: "seminar", credits: 1, status: "in-progress", semester: "Fall 2025" },
+        { name: "DSE 599 (Spring 2026)", category: "seminar", credits: 1, status: "planned", semester: "Spring 2026" },
+        { name: "DSE 599 (Fall 2026)", category: "seminar", credits: 1, status: "planned", semester: "Fall 2026" }
       ],
       deadlines: [
-        { name: "Committee Meeting", date: "2025-12-20" },
-        { name: "Spring Registration", date: "2026-01-10" },
-        { name: "Qualifying Exam", date: "2026-03-15" },
-        { name: "Proposal Defense", date: "2027-03-01" }
+        { name: "Fall 2025 Classes End", date: "2025-12-05" },
+        { name: "Spring 2026 Registration", date: "2026-01-10" },
+        { name: "Qualifying Exam", date: "2026-09-15" },
+        { name: "Annual Review", date: "2026-04-01" },
+        { name: "Proposal Defense", date: "2027-03-01" },
+        { name: "Final Defense", date: "2029-04-15" }
       ],
       milestones: [
-        { name: "Coursework Phase 1", completed: true },
+        { name: "First Semester Complete", completed: false },
         { name: "Committee Formed", completed: false },
-        { name: "Qualifying Exam", completed: false },
-        { name: "Proposal Defense", completed: false },
+        { name: "Qualifying Exam Passed", completed: false },
+        { name: "Proposal Defended", completed: false },
         { name: "Dissertation Research", completed: false },
         { name: "Final Defense", completed: false }
       ]
     };
 
-    // GitHub config
-    let ghConfig = JSON.parse(localStorage.getItem('bredesen-gh-config')) || null;
+    let ghConfig = JSON.parse(localStorage.getItem('bryan-phd-gh')) || null;
     let fileSha = null;
+    let data = JSON.parse(localStorage.getItem('bryan-phd-data')) || defaultData;
 
-    // Load or init data
-    let data = JSON.parse(localStorage.getItem('bredesen-tracker')) || defaultData;
-
-    async function save() {
-      localStorage.setItem('bredesen-tracker', JSON.stringify(data));
-      render();
-
-      // Sync to GitHub if connected
-      if (ghConfig) {
-        await syncToGitHub();
-      }
+    // Tab switching
+    function showTab(tabId) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
     }
 
-    function updateSyncStatus(status, text) {
-      const dot = document.getElementById('sync-dot');
-      const label = document.getElementById('sync-text');
-      dot.className = 'sync-dot ' + status;
-      label.textContent = text;
+    function toggleCategory(id) {
+      document.getElementById('cat-' + id).classList.toggle('collapsed');
     }
 
-    async function syncToGitHub() {
-      if (!ghConfig) return;
-
-      updateSyncStatus('syncing', 'Syncing...');
-
-      try {
-        const { username, repo, token } = ghConfig;
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/data.json`;
-
-        // Get current file to get SHA
-        const getRes = await fetch(apiUrl, {
-          headers: { 'Authorization': `token ${token}` }
-        });
-
-        if (getRes.ok) {
-          const fileData = await getRes.json();
-          fileSha = fileData.sha;
-        }
-
-        // Update file
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-        const body = {
-          message: `Update tracker data - ${new Date().toLocaleString()}`,
-          content: content,
-          branch: 'main'
-        };
-
-        if (fileSha) body.sha = fileSha;
-
-        const putRes = await fetch(apiUrl, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(body)
-        });
-
-        if (putRes.ok) {
-          const result = await putRes.json();
-          fileSha = result.content.sha;
-          updateSyncStatus('connected', 'Synced to GitHub');
-        } else {
-          throw new Error('Failed to sync');
-        }
-      } catch (err) {
-        console.error('Sync error:', err);
-        updateSyncStatus('error', 'Sync failed');
-      }
-    }
-
-    async function loadFromGitHub() {
-      if (!ghConfig) return false;
-
-      try {
-        const { username, repo, token } = ghConfig;
-        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/data.json`;
-
-        const res = await fetch(apiUrl, {
-          headers: { 'Authorization': `token ${token}` }
-        });
-
-        if (res.ok) {
-          const fileData = await res.json();
-          fileSha = fileData.sha;
-          const content = decodeURIComponent(escape(atob(fileData.content)));
-          data = JSON.parse(content);
-          localStorage.setItem('bredesen-tracker', JSON.stringify(data));
-          return true;
-        }
-      } catch (err) {
-        console.error('Load error:', err);
-      }
-      return false;
-    }
-
-    async function connectGitHub() {
-      const username = document.getElementById('gh-username').value.trim();
-      const repo = document.getElementById('gh-repo').value.trim();
-      const token = document.getElementById('gh-token').value.trim();
-
-      if (!username || !repo || !token) {
-        return alert('Please fill all fields');
-      }
-
-      // Test connection
-      updateSyncStatus('syncing', 'Connecting...');
-
-      try {
-        const res = await fetch(`https://api.github.com/repos/${username}/${repo}`, {
-          headers: { 'Authorization': `token ${token}` }
-        });
-
-        if (!res.ok) throw new Error('Cannot access repo');
-
-        ghConfig = { username, repo, token };
-        localStorage.setItem('bredesen-gh-config', JSON.stringify(ghConfig));
-
-        // Try to load existing data from GitHub
-        const loaded = await loadFromGitHub();
-        if (loaded) {
-          render();
-        } else {
-          // Push current data to GitHub
-          await syncToGitHub();
-        }
-
-        closeModal('github');
-        updateSyncStatus('connected', 'Connected to GitHub');
-      } catch (err) {
-        alert('Failed to connect. Check your credentials and repo name.');
-        updateSyncStatus('error', 'Connection failed');
-      }
-    }
-
-    function disconnectGitHub() {
-      ghConfig = null;
-      fileSha = null;
-      localStorage.removeItem('bredesen-gh-config');
-      updateSyncStatus('', 'Local only');
-      closeModal('github');
-    }
-
+    // Rendering
     function render() {
       renderHeader();
-      renderCourses();
+      renderCourseCategories();
+      renderOverview();
       renderDeadlines();
       renderMilestones();
     }
 
     function renderHeader() {
       const s = data.settings;
-      document.getElementById('program-info').textContent = `${s.program} in ${s.concentration}`;
-
       const start = new Date(s.startDate);
       const end = new Date(s.endDate);
       const today = new Date();
-      const total = end - start;
-      const elapsed = today - start;
-      const pct = Math.min(100, Math.max(0, (elapsed / total) * 100));
+      const pct = Math.min(100, Math.max(0, ((today - start) / (end - start)) * 100));
 
       document.getElementById('timeline-bar').style.width = pct + '%';
-      document.getElementById('timeline-text').textContent = `${pct.toFixed(0)}% complete • Grad: ${s.endDate}`;
+      document.getElementById('timeline-text').textContent = pct.toFixed(0) + '% complete';
 
-      // Credits
-      const completedCredits = data.courses.reduce((sum, c) => sum + c.credits, 0);
-      document.getElementById('credits-stat').textContent = `${completedCredits}/${s.creditsRequired}`;
+      // Calculate credits
+      const completed = data.courses.filter(c => c.status === 'completed').reduce((s, c) => s + c.credits, 0);
+      const transferred = data.courses.filter(c => c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
+      const inProgress = data.courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
+      const total = completed + transferred;
+      const remaining = Math.max(0, s.creditsRequired - total - inProgress);
 
-      // Milestones
-      const completedMilestones = data.milestones.filter(m => m.completed).length;
-      document.getElementById('milestones-stat').textContent = `${completedMilestones}/${data.milestones.length}`;
+      document.getElementById('credits-stat').textContent = `${total}/${s.creditsRequired}`;
+      document.getElementById('transferred-stat').textContent = transferred;
+      document.getElementById('in-progress-stat').textContent = inProgress;
+      document.getElementById('remaining-stat').textContent = remaining;
+
+      document.getElementById('sum-transferred').textContent = transferred;
+      document.getElementById('sum-completed').textContent = completed;
+      document.getElementById('sum-inprogress').textContent = inProgress;
+      document.getElementById('sum-remaining').textContent = remaining;
 
       // Next deadline
       const upcoming = data.deadlines
-        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / (1000*60*60*24)) }))
+        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
         .filter(d => d.days >= 0)
         .sort((a, b) => a.days - b.days);
-
       document.getElementById('next-deadline-stat').textContent = upcoming.length ? upcoming[0].days : '--';
-
-      // GPA
-      const gradePoints = { 'A': 4.0, 'A-': 3.7, 'B+': 3.3, 'B': 3.0, 'B-': 2.7, 'C+': 2.3, 'C': 2.0 };
-      const gradedCourses = data.courses.filter(c => gradePoints[c.grade]);
-      if (gradedCourses.length) {
-        const totalPoints = gradedCourses.reduce((sum, c) => sum + gradePoints[c.grade] * c.credits, 0);
-        const totalCredits = gradedCourses.reduce((sum, c) => sum + c.credits, 0);
-        document.getElementById('gpa-stat').textContent = (totalPoints / totalCredits).toFixed(2);
-      } else {
-        document.getElementById('gpa-stat').textContent = '--';
-      }
     }
 
-    function renderCourses() {
-      const container = document.getElementById('courses-list');
-      if (!data.courses.length) {
-        container.innerHTML = '<div class="empty-state">No courses yet</div>';
-        return;
-      }
-      container.innerHTML = data.courses.map((c, i) => `
-        <div class="course-item">
-          <span class="course-name">${c.name}</span>
-          <span class="course-credits">${c.credits}cr</span>
-          <span class="course-grade">${c.grade || '...'}</span>
-          <button class="delete-btn" onclick="deleteCourse(${i})">×</button>
-        </div>
-      `).join('');
-    }
-
-    function renderDeadlines() {
-      const container = document.getElementById('deadlines-list');
-      const today = new Date();
-
-      const sorted = data.deadlines
-        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / (1000*60*60*24)) }))
-        .sort((a, b) => a.days - b.days);
-
-      if (!sorted.length) {
-        container.innerHTML = '<div class="empty-state">No deadlines yet</div>';
-        return;
-      }
-
-      container.innerHTML = sorted.map((d, i) => {
-        let urgency = 'green';
-        if (d.days <= 14) urgency = 'red';
-        else if (d.days <= 30) urgency = 'yellow';
-
-        let remaining = d.days + 'd';
-        if (d.days < 0) remaining = `${Math.abs(d.days)}d ago`;
-        else if (d.days > 365) remaining = (d.days / 365).toFixed(1) + 'yr';
-        else if (d.days > 60) remaining = (d.days / 30).toFixed(1) + 'mo';
-
-        const dateStr = new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        const origIndex = data.deadlines.findIndex(x => x.name === d.name && x.date === d.date);
+    function renderCourseCategories() {
+      const container = document.getElementById('course-categories');
+      container.innerHTML = data.courseCategories.map(cat => {
+        const courses = data.courses.filter(c => c.category === cat.id);
+        const completed = courses.filter(c => c.status === 'completed' || c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
+        const inProg = courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
 
         return `
-          <div class="deadline-item">
-            <div class="urgency ${urgency}"></div>
-            <div class="deadline-info">
-              <div class="deadline-name">${d.name}</div>
-              <div class="deadline-date">${dateStr}</div>
+          <div class="category" id="cat-${cat.id}">
+            <div class="category-header" onclick="toggleCategory('${cat.id}')">
+              <span class="category-title"><span class="arrow">▼</span> ${cat.name}</span>
+              <span class="category-credits">${completed}${inProg ? '+' + inProg : ''}/${cat.requiredCredits} cr</span>
             </div>
-            <div class="deadline-remaining">${remaining}</div>
-            <button class="delete-btn" onclick="deleteDeadline(${origIndex})">×</button>
+            <div class="category-courses">
+              ${courses.map((c, i) => {
+                const idx = data.courses.indexOf(c);
+                const isCompleted = c.status === 'completed' || c.status === 'transfer';
+                return `
+                  <div class="course-row ${isCompleted ? 'completed' : ''}">
+                    <input type="checkbox" ${isCompleted ? 'checked' : ''} onchange="toggleCourseStatus(${idx})">
+                    <span class="course-title">${c.name}</span>
+                    <div class="course-meta">
+                      ${c.status === 'in-progress' ? '<span class="badge in-progress">IN PROGRESS</span>' : ''}
+                      ${c.status === 'transfer' ? '<span class="badge transfer">TRANSFER</span>' : ''}
+                      ${c.status === 'planned' && c.semester ? `<span class="badge planned">${c.semester}</span>` : ''}
+                      <span class="credits">${c.credits}cr</span>
+                      <button class="delete-btn" onclick="deleteCourse(${idx})">×</button>
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
           </div>
         `;
       }).join('');
     }
 
+    function renderOverview() {
+      // Current semester courses
+      const current = data.courses.filter(c => c.status === 'in-progress');
+      document.getElementById('current-courses').innerHTML = current.length
+        ? current.map(c => `
+            <div class="course-row">
+              <span class="course-title">${c.name}</span>
+              <span class="credits">${c.credits}cr</span>
+            </div>
+          `).join('')
+        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No courses in progress</div>';
+
+      // Upcoming deadlines (top 4)
+      const today = new Date();
+      const upcoming = data.deadlines
+        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
+        .filter(d => d.days >= 0)
+        .sort((a, b) => a.days - b.days)
+        .slice(0, 4);
+
+      document.getElementById('upcoming-deadlines').innerHTML = upcoming.length
+        ? upcoming.map(d => renderDeadlineItem(d)).join('')
+        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No upcoming deadlines</div>';
+
+      // Milestones
+      document.getElementById('overview-milestones').innerHTML = data.milestones.map((m, i) => `
+        <div class="milestone-item" onclick="toggleMilestone(${i})">
+          <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
+          <span>${m.name}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderDeadlineItem(d) {
+      const urgency = d.days <= 14 ? 'red' : d.days <= 30 ? 'yellow' : 'green';
+      let remaining = d.days + 'd';
+      if (d.days > 365) remaining = (d.days / 365).toFixed(1) + 'yr';
+      else if (d.days > 60) remaining = (d.days / 30).toFixed(1) + 'mo';
+      const dateStr = new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const idx = data.deadlines.findIndex(x => x.name === d.name && x.date === d.date);
+
+      return `
+        <div class="deadline-item">
+          <div class="urgency ${urgency}"></div>
+          <div class="deadline-info">
+            <div class="deadline-name">${d.name}</div>
+            <div class="deadline-date">${dateStr}</div>
+          </div>
+          <div class="deadline-remaining">${remaining}</div>
+          <button class="delete-btn" onclick="deleteDeadline(${idx})">×</button>
+        </div>
+      `;
+    }
+
+    function renderDeadlines() {
+      const today = new Date();
+      const sorted = data.deadlines
+        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
+        .sort((a, b) => a.days - b.days);
+
+      document.getElementById('all-deadlines').innerHTML = sorted.length
+        ? sorted.map(d => renderDeadlineItem(d)).join('')
+        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No deadlines</div>';
+    }
+
     function renderMilestones() {
-      const container = document.getElementById('milestones-list');
-      if (!data.milestones.length) {
-        container.innerHTML = '<div class="empty-state">No milestones yet</div>';
-        return;
-      }
-      container.innerHTML = data.milestones.map((m, i) => `
+      document.getElementById('all-milestones').innerHTML = data.milestones.map((m, i) => `
         <div class="milestone-item" onclick="toggleMilestone(${i})">
           <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
           <span>${m.name}</span>
@@ -869,25 +697,29 @@
       `).join('');
     }
 
-    // CRUD operations
+    // CRUD
+    function toggleCourseStatus(i) {
+      const c = data.courses[i];
+      if (c.status === 'completed' || c.status === 'transfer') {
+        c.status = 'planned';
+      } else {
+        c.status = 'completed';
+      }
+      save();
+    }
+
     function openModal(type) {
       document.getElementById('modal-' + type).classList.add('active');
       if (type === 'settings') {
-        document.getElementById('settings-program').value = data.settings.program;
-        document.getElementById('settings-concentration').value = data.settings.concentration;
         document.getElementById('settings-start').value = data.settings.startDate;
         document.getElementById('settings-end').value = data.settings.endDate;
         document.getElementById('settings-credits').value = data.settings.creditsRequired;
       }
-      if (type === 'github') {
-        if (ghConfig) {
-          document.getElementById('gh-username').value = ghConfig.username;
-          document.getElementById('gh-repo').value = ghConfig.repo;
-          document.getElementById('gh-token').value = ghConfig.token;
-          document.getElementById('gh-disconnect').style.display = 'block';
-        } else {
-          document.getElementById('gh-disconnect').style.display = 'none';
-        }
+      if (type === 'github' && ghConfig) {
+        document.getElementById('gh-username').value = ghConfig.username;
+        document.getElementById('gh-repo').value = ghConfig.repo;
+        document.getElementById('gh-token').value = ghConfig.token;
+        document.getElementById('gh-disconnect').style.display = 'block';
       }
     }
 
@@ -897,26 +729,22 @@
 
     function saveCourse() {
       const name = document.getElementById('course-name').value.trim();
+      const category = document.getElementById('course-category').value;
       const credits = parseInt(document.getElementById('course-credits').value);
+      const status = document.getElementById('course-status').value;
       const semester = document.getElementById('course-semester').value.trim();
-      const grade = document.getElementById('course-grade').value;
-
-      if (!name) return alert('Please enter a course name');
-
-      data.courses.push({ name, credits, semester, grade });
+      if (!name) return alert('Enter course name');
+      data.courses.push({ name, category, credits, status, semester });
       save();
       closeModal('course');
       document.getElementById('course-name').value = '';
       document.getElementById('course-semester').value = '';
-      document.getElementById('course-grade').value = '';
     }
 
     function saveDeadline() {
       const name = document.getElementById('deadline-name').value.trim();
       const date = document.getElementById('deadline-date').value;
-
-      if (!name || !date) return alert('Please fill all fields');
-
+      if (!name || !date) return alert('Fill all fields');
       data.deadlines.push({ name, date });
       save();
       closeModal('deadline');
@@ -926,8 +754,7 @@
 
     function saveMilestone() {
       const name = document.getElementById('milestone-name').value.trim();
-      if (!name) return alert('Please enter a milestone name');
-
+      if (!name) return alert('Enter milestone name');
       data.milestones.push({ name, completed: false });
       save();
       closeModal('milestone');
@@ -935,8 +762,6 @@
     }
 
     function saveSettings() {
-      data.settings.program = document.getElementById('settings-program').value;
-      data.settings.concentration = document.getElementById('settings-concentration').value;
       data.settings.startDate = document.getElementById('settings-start').value;
       data.settings.endDate = document.getElementById('settings-end').value;
       data.settings.creditsRequired = parseInt(document.getElementById('settings-credits').value);
@@ -949,13 +774,97 @@
     function deleteMilestone(i) { data.milestones.splice(i, 1); save(); }
     function toggleMilestone(i) { data.milestones[i].completed = !data.milestones[i].completed; save(); }
 
-    // Import/Export
+    // Save & Sync
+    async function save() {
+      localStorage.setItem('bryan-phd-data', JSON.stringify(data));
+      render();
+      if (ghConfig) await syncToGitHub();
+    }
+
+    function updateSyncStatus(status, text) {
+      document.getElementById('sync-dot').className = 'sync-dot ' + status;
+      document.getElementById('sync-text').textContent = text;
+    }
+
+    async function syncToGitHub() {
+      if (!ghConfig) return;
+      updateSyncStatus('syncing', 'Syncing...');
+      try {
+        const { username, repo, token } = ghConfig;
+        const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/data.json`;
+        const getRes = await fetch(apiUrl, { headers: { 'Authorization': `token ${token}` } });
+        if (getRes.ok) fileSha = (await getRes.json()).sha;
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+        const body = { message: `Update - ${new Date().toLocaleString()}`, content, branch: 'main' };
+        if (fileSha) body.sha = fileSha;
+        const putRes = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (putRes.ok) {
+          fileSha = (await putRes.json()).content.sha;
+          updateSyncStatus('connected', 'Synced');
+        } else throw new Error();
+      } catch (e) {
+        updateSyncStatus('error', 'Sync failed');
+      }
+    }
+
+    async function loadFromGitHub() {
+      if (!ghConfig) return false;
+      try {
+        const { username, repo, token } = ghConfig;
+        const res = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/data.json`, {
+          headers: { 'Authorization': `token ${token}` }
+        });
+        if (res.ok) {
+          const fileData = await res.json();
+          fileSha = fileData.sha;
+          data = JSON.parse(decodeURIComponent(escape(atob(fileData.content))));
+          localStorage.setItem('bryan-phd-data', JSON.stringify(data));
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    async function connectGitHub() {
+      const username = document.getElementById('gh-username').value.trim();
+      const repo = document.getElementById('gh-repo').value.trim();
+      const token = document.getElementById('gh-token').value.trim();
+      if (!username || !repo || !token) return alert('Fill all fields');
+      updateSyncStatus('syncing', 'Connecting...');
+      try {
+        const res = await fetch(`https://api.github.com/repos/${username}/${repo}`, {
+          headers: { 'Authorization': `token ${token}` }
+        });
+        if (!res.ok) throw new Error();
+        ghConfig = { username, repo, token };
+        localStorage.setItem('bryan-phd-gh', JSON.stringify(ghConfig));
+        if (await loadFromGitHub()) render();
+        else await syncToGitHub();
+        closeModal('github');
+        updateSyncStatus('connected', 'Connected');
+      } catch (e) {
+        alert('Failed to connect');
+        updateSyncStatus('error', 'Failed');
+      }
+    }
+
+    function disconnectGitHub() {
+      ghConfig = null;
+      fileSha = null;
+      localStorage.removeItem('bryan-phd-gh');
+      updateSyncStatus('', 'Local only');
+      closeModal('github');
+    }
+
     function exportData() {
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = 'bredesen-tracker.json';
+      a.href = URL.createObjectURL(blob);
+      a.download = 'phd-tracker.json';
       a.click();
     }
 
@@ -967,31 +876,22 @@
         try {
           data = JSON.parse(e.target.result);
           save();
-          alert('Data imported successfully!');
         } catch (err) {
-          alert('Invalid JSON file');
+          alert('Invalid JSON');
         }
       };
       reader.readAsText(file);
     }
 
-    // Close modals on outside click
-    document.querySelectorAll('.modal').forEach(modal => {
-      modal.addEventListener('click', e => {
-        if (e.target === modal) modal.classList.remove('active');
-      });
+    document.querySelectorAll('.modal').forEach(m => {
+      m.addEventListener('click', e => { if (e.target === m) m.classList.remove('active'); });
     });
 
-    // Initial render and GitHub check
     async function init() {
       if (ghConfig) {
         updateSyncStatus('syncing', 'Loading...');
-        const loaded = await loadFromGitHub();
-        if (loaded) {
-          updateSyncStatus('connected', 'Connected to GitHub');
-        } else {
-          updateSyncStatus('connected', 'Connected (no remote data)');
-        }
+        if (await loadFromGitHub()) updateSyncStatus('connected', 'Connected');
+        else updateSyncStatus('connected', 'Connected');
       }
       render();
     }
