@@ -6,10 +6,16 @@
     "endDate": "2028-05-15",
     "creditsRequired": 36
   },
+  "courseCategories": [
+    { "id": "core", "name": "Core Requirements", "requiredCredits": 21 },
+    { "id": "domain", "name": "ML/Domain", "requiredCredits": 9 },
+    { "id": "breadth", "name": "Knowledge Breadth", "requiredCredits": 6 },
+    { "id": "seminar", "name": "Seminar", "requiredCredits": 3 }
+  ],
   "courses": [
-    { "name": "DSE 512 - Foundations of Data Science", "credits": 3, "semester": "Fall 2024", "grade": "A" },
-    { "name": "DSE 610 - Research Methods", "credits": 3, "semester": "Fall 2024", "grade": "A" },
-    { "name": "COSC 526 - Machine Learning", "credits": 3, "semester": "Fall 2024", "grade": "B+" }
+    { "name": "DSE 512 - Foundations of Data Science", "category": "core", "credits": 3, "status": "completed", "semester": "Fall 2024", "grade": "A" },
+    { "name": "DSE 610 - Research Methods", "category": "core", "credits": 3, "status": "completed", "semester": "Fall 2024", "grade": "A" },
+    { "name": "COSC 526 - Machine Learning", "category": "domain", "credits": 3, "status": "completed", "semester": "Fall 2024", "grade": "B+" }
   ],
   "deadlines": [
     { "name": "Form Doctoral Committee", "date": "2025-02-28", "category": "milestone" },
@@ -41,5 +47,6 @@
     { "name": "Advisor 1:1", "date": "2025-01-09", "time": "10:00", "category": "meeting", "recurring": "weekly" },
     { "name": "Lab Meeting", "date": "2025-01-10", "time": "14:00", "category": "meeting", "recurring": "weekly" },
     { "name": "DSE 599 Seminar", "date": "2025-01-13", "time": "12:00", "category": "academic", "recurring": "weekly" }
-  ]
+  ],
+  "projects": []
 }

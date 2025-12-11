@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DSE PhD Tracker</title>
+  <title>Life Dashboard</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -29,96 +29,97 @@
     }
     .container { max-width: 900px; margin: 0 auto; }
 
+    /* Header */
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 0 0.5rem; }
+    header h1 { font-size: 1.1rem; color: var(--accent); }
+    .header-stat { text-align: right; }
+    .header-stat-value { font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+    .header-stat-label { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; }
+
     /* Tabs */
     .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; overflow-x: auto; }
-    .tab { background: none; border: none; color: var(--muted); padding: 0.75rem 1rem; cursor: pointer; font-size: 0.85rem; border-radius: 8px 8px 0 0; transition: all 0.2s; white-space: nowrap; }
+    .tab { background: none; border: none; color: var(--muted); padding: 0.75rem 1.25rem; cursor: pointer; font-size: 0.9rem; border-radius: 8px 8px 0 0; transition: all 0.2s; white-space: nowrap; }
     .tab:hover { color: var(--text); background: var(--card); }
     .tab.active { color: var(--accent); background: var(--card); font-weight: 600; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Header */
-    header { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
-    header h1 { font-size: 1.25rem; color: var(--accent); margin-bottom: 0.25rem; }
-    header p { color: var(--muted); font-size: 0.85rem; }
-    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; margin: 1rem 0 0.5rem; overflow: hidden; }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); transition: width 0.5s; }
-    .quick-stats { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
-    .quick-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
-    .quick-stat-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; }
-
     /* Cards */
     .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-bottom: 1rem; }
     .card h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.75rem; }
 
-    /* Course Categories */
-    .category { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 1rem; overflow: hidden; }
-    .category-header { background: #222; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .category-header:hover { background: #2a2a2a; }
-    .category-title { font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
-    .category-title .arrow { transition: transform 0.2s; }
-    .category.collapsed .arrow { transform: rotate(-90deg); }
-    .category.collapsed .category-courses { display: none; }
-    .category-credits { font-size: 0.8rem; color: var(--muted); }
-    .category-courses { padding: 0.5rem; }
-
-    /* Course Items */
-    .course-row { display: flex; align-items: center; padding: 0.6rem 0.5rem; margin-bottom: 0.25rem; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); gap: 0.75rem; }
-    .course-row.completed { opacity: 0.5; }
-    .course-row.completed .course-title { text-decoration: line-through; }
-    .course-title { flex: 1; font-size: 0.9rem; }
-    .course-meta { display: flex; align-items: center; gap: 0.5rem; }
-    .badge { font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 500; }
-    .badge.in-progress { background: #3a3a00; color: var(--yellow); }
-    .badge.transfer { background: #2a0a3a; color: var(--purple); }
-    .badge.planned { background: #1a2a3a; color: var(--accent); }
-    .credits { color: var(--green); font-weight: 600; font-size: 0.85rem; }
+    /* Progress bars */
+    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); transition: width 0.5s; }
 
     /* Grid */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.75rem; }
 
-    /* Deadlines */
-    .deadline-item { display: flex; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
+    /* Stats */
+    .stat-row { display: flex; justify-content: space-between; padding: 0.4rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-row span:last-child { font-weight: 600; color: var(--green); }
+
+    /* Course Categories */
+    .category { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; }
+    .category-header { background: #222; padding: 0.6rem 1rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .category-header:hover { background: #2a2a2a; }
+    .category-title { font-weight: 600; font-size: 0.85rem; display: flex; align-items: center; gap: 0.5rem; }
+    .category-title .arrow { transition: transform 0.2s; font-size: 0.7rem; }
+    .category.collapsed .arrow { transform: rotate(-90deg); }
+    .category.collapsed .category-content { display: none; }
+    .category-credits { font-size: 0.75rem; color: var(--muted); }
+    .category-content { padding: 0.5rem; }
+
+    /* Items */
+    .item-row { display: flex; align-items: center; padding: 0.5rem; margin-bottom: 0.25rem; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); gap: 0.75rem; font-size: 0.85rem; }
+    .item-row.completed { opacity: 0.5; }
+    .item-row.completed .item-title { text-decoration: line-through; }
+    .item-title { flex: 1; }
+    .item-meta { display: flex; align-items: center; gap: 0.5rem; }
+    .badge { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 500; }
+    .badge.in-progress { background: #3a3a00; color: var(--yellow); }
+    .badge.transfer { background: #2a0a3a; color: var(--purple); }
+    .badge.planned { background: #1a2a3a; color: var(--accent); }
+    .badge.active { background: #0a2a1a; color: var(--green); }
+    .badge.paused { background: #2a2a2a; color: var(--muted); }
+
+    /* Deadlines & Milestones */
+    .deadline-item { display: flex; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
     .deadline-item:last-child { border-bottom: none; }
     .urgency { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
     .urgency.red { background: var(--red); box-shadow: 0 0 6px var(--red); }
     .urgency.yellow { background: var(--yellow); }
     .urgency.green { background: var(--green); }
     .deadline-info { flex: 1; }
-    .deadline-name { font-weight: 500; font-size: 0.9rem; }
-    .deadline-date { font-size: 0.75rem; color: var(--muted); }
-    .deadline-remaining { font-size: 0.85rem; font-weight: 600; }
+    .deadline-name { font-weight: 500; font-size: 0.85rem; }
+    .deadline-date { font-size: 0.7rem; color: var(--muted); }
+    .deadline-remaining { font-size: 0.8rem; font-weight: 600; }
 
-    /* Milestones */
-    .milestone-item { display: flex; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
+    .milestone-item { display: flex; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); gap: 0.75rem; }
     .milestone-item:last-child { border-bottom: none; }
-    .milestone-check { width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+    .milestone-check { width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
     .milestone-check.done { background: var(--green); border-color: var(--green); color: var(--bg); }
-
-    /* Summary */
-    .summary { background: var(--card); border: 2px solid var(--green); border-radius: 8px; padding: 1rem; margin-top: 1rem; }
-    .summary h3 { color: var(--green); font-size: 0.9rem; margin-bottom: 0.75rem; }
-    .summary-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem; font-size: 0.85rem; }
-    .summary-stat { display: flex; justify-content: space-between; padding: 0.25rem 0; }
-    .summary-stat span:last-child { font-weight: 600; color: var(--green); }
 
     /* Calendar */
     .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-    .calendar-nav button { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; }
+    .calendar-nav button { background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
     .calendar-nav button:hover { border-color: var(--accent); }
     .calendar-nav button.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .calendar-nav h2 { font-size: 1.1rem; }
 
     /* Year View */
     .year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
     @media (max-width: 600px) { .year-grid { grid-template-columns: repeat(3, 1fr); } }
-    .month-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; cursor: pointer; transition: all 0.2s; }
+    .month-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; cursor: pointer; transition: all 0.2s; }
     .month-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .month-card.selected { border-color: var(--accent); background: #1a2a3a; }
     .month-card.current { border-color: var(--green); }
-    .month-card-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.5rem; }
+    .month-card-name { font-weight: 600; font-size: 0.85rem; margin-bottom: 0.3rem; }
     .month-card.current .month-card-name { color: var(--green); }
-    .month-card-count { font-size: 0.75rem; color: var(--muted); }
-    .month-card-count span { display: inline-block; margin-right: 0.5rem; }
+    .month-card-count { font-size: 0.7rem; color: var(--muted); }
+    .month-card-count span { display: inline-block; margin-right: 0.4rem; }
     .month-card-count .deadlines { color: var(--red); }
     .month-card-count .events { color: var(--accent); }
 
@@ -129,7 +130,7 @@
     .month-detail-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 1.2rem; }
     .month-detail-close:hover { color: var(--text); }
     .month-event-list { max-height: 400px; overflow-y: auto; }
-    .month-event-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.5rem; border-left: 3px solid var(--accent); }
+    .month-event-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.4rem; border-left: 3px solid var(--accent); }
     .month-event-item.deadline { border-left-color: var(--red); }
     .month-event-item.academic { border-left-color: var(--purple); }
     .month-event-item.meeting { border-left-color: var(--accent); }
@@ -137,113 +138,88 @@
     .month-event-item.work { border-left-color: var(--orange); }
     .month-event-item.admin { border-left-color: var(--yellow); }
     .month-event-item.milestone { border-left-color: var(--pink); }
-    .month-event-date { min-width: 45px; font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .month-event-date { min-width: 40px; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
     .month-event-info { flex: 1; }
-    .month-event-name { font-size: 0.9rem; font-weight: 500; }
-    .month-event-time { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
-    .month-event-badge { font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 3px; background: var(--border); color: var(--muted); margin-left: 0.5rem; }
-    .calendar-nav h2 { font-size: 1.1rem; }
+    .month-event-name { font-size: 0.85rem; font-weight: 500; }
+    .month-event-time { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; }
+    .month-event-badge { font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 3px; background: var(--border); color: var(--muted); margin-left: 0.4rem; }
+
+    /* Month Grid View */
     .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem; }
-    .calendar-day-header { text-align: center; font-size: 0.7rem; color: var(--muted); padding: 0.5rem; text-transform: uppercase; }
+    .calendar-day-header { text-align: center; font-size: 0.65rem; color: var(--muted); padding: 0.4rem; text-transform: uppercase; }
     #calendar-days { display: contents; }
-    .calendar-day { min-height: 80px; background: var(--bg); border-radius: 6px; padding: 0.3rem; display: flex; flex-direction: column; }
+    .calendar-day { min-height: 70px; background: var(--bg); border-radius: 6px; padding: 0.25rem; display: flex; flex-direction: column; }
     .calendar-day.other-month { opacity: 0.3; }
     .calendar-day.today { border: 2px solid var(--accent); }
     .calendar-day.has-events { background: #1a1a2a; }
-    .day-number { font-size: 0.8rem; font-weight: 600; color: var(--muted); margin-bottom: 0.2rem; }
+    .day-number { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 0.15rem; }
     .calendar-day.today .day-number { color: var(--accent); }
     .day-events { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
-    .cal-event { font-size: 0.65rem; padding: 0.15rem 0.3rem; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cal-event { font-size: 0.6rem; padding: 0.1rem 0.25rem; border-radius: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .cal-event.deadline { background: var(--red); color: white; }
     .cal-event.academic { background: var(--purple); color: white; }
     .cal-event.meeting { background: var(--accent); color: var(--bg); }
     .cal-event.personal { background: var(--green); color: var(--bg); }
     .cal-event.work { background: var(--orange); color: var(--bg); }
+    .cal-event.admin { background: var(--yellow); color: var(--bg); }
     .cal-event.recurring { border-left: 2px solid var(--yellow); }
-    .more-events { font-size: 0.6rem; color: var(--muted); text-align: center; }
+    .more-events { font-size: 0.55rem; color: var(--muted); text-align: center; }
 
     /* Agenda */
     .agenda-section { margin-top: 1.5rem; }
     .agenda-day { margin-bottom: 1rem; }
-    .agenda-date { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+    .agenda-date { font-size: 0.8rem; font-weight: 600; color: var(--accent); margin-bottom: 0.4rem; padding-bottom: 0.2rem; border-bottom: 1px solid var(--border); }
     .agenda-date.today { color: var(--green); }
-    .agenda-event { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.25rem; border-left: 3px solid var(--accent); }
+    .agenda-event { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.2rem; border-left: 3px solid var(--accent); font-size: 0.8rem; }
     .agenda-event.deadline { border-left-color: var(--red); }
     .agenda-event.academic { border-left-color: var(--purple); }
     .agenda-event.meeting { border-left-color: var(--accent); }
     .agenda-event.personal { border-left-color: var(--green); }
     .agenda-event.work { border-left-color: var(--orange); }
-    .agenda-time { font-size: 0.75rem; color: var(--muted); min-width: 60px; }
-    .agenda-title { flex: 1; font-size: 0.85rem; }
-    .agenda-badge { font-size: 0.6rem; padding: 0.1rem 0.4rem; border-radius: 3px; background: var(--border); color: var(--muted); }
-
-    /* Footer */
-    footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.75rem; }
+    .agenda-time { font-size: 0.7rem; color: var(--muted); min-width: 55px; }
+    .agenda-title { flex: 1; }
+    .agenda-badge { font-size: 0.55rem; padding: 0.1rem 0.35rem; border-radius: 3px; background: var(--border); color: var(--muted); }
 
     /* Legend */
-    .legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
-    .legend-item { display: flex; align-items: center; gap: 0.3rem; font-size: 0.7rem; color: var(--muted); }
-    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+    .legend { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .legend-item { display: flex; align-items: center; gap: 0.25rem; font-size: 0.65rem; color: var(--muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+
+    /* Projects */
+    .project-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+    .project-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem; }
+    .project-name { font-weight: 600; font-size: 1rem; }
+    .project-goal { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .project-progress { margin-bottom: 0.5rem; }
+    .project-progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .project-deadlines { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+    .project-deadlines h4 { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; }
+
+    /* Footer */
+    footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.7rem; }
+
+    /* Empty state */
+    .empty-state { color: var(--muted); padding: 2rem; text-align: center; font-size: 0.85rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>DSE PhD TRACKER</h1>
-      <p id="program-info">Data Science & Engineering • Bredesen Center</p>
-      <div class="progress-bar"><div class="progress-fill" id="timeline-bar" style="width: 0%"></div></div>
-      <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted);">
-        <span>Started: Fall 2025</span>
-        <span id="timeline-text">0%</span>
-        <span>Target: Spring 2029</span>
-      </div>
-      <div class="quick-stats">
-        <div><div class="quick-stat-value" id="credits-stat">0/36</div><div class="quick-stat-label">Credits</div></div>
-        <div><div class="quick-stat-value" id="transferred-stat">6</div><div class="quick-stat-label">Transferred</div></div>
-        <div><div class="quick-stat-value" id="in-progress-stat">0</div><div class="quick-stat-label">In Progress</div></div>
-        <div><div class="quick-stat-value" id="remaining-stat">0</div><div class="quick-stat-label">Remaining</div></div>
-        <div><div class="quick-stat-value" id="next-deadline-stat">--</div><div class="quick-stat-label">Days to Next</div></div>
+      <h1>LIFE DASHBOARD</h1>
+      <div class="header-stat">
+        <div class="header-stat-value" id="next-deadline-days">--</div>
+        <div class="header-stat-label">Days to Next</div>
       </div>
     </header>
 
     <div class="tabs">
-      <button class="tab active" onclick="showTab('overview')">Overview</button>
-      <button class="tab" onclick="showTab('calendar')">Calendar</button>
-      <button class="tab" onclick="showTab('courses')">Courses</button>
-      <button class="tab" onclick="showTab('deadlines')">Deadlines</button>
-      <button class="tab" onclick="showTab('milestones')">Milestones</button>
-    </div>
-
-    <!-- OVERVIEW TAB -->
-    <div class="tab-content active" id="tab-overview">
-      <div class="grid">
-        <div class="card">
-          <h2>Current Semester</h2>
-          <div id="current-courses"></div>
-        </div>
-        <div class="card">
-          <h2>Upcoming Deadlines</h2>
-          <div id="upcoming-deadlines"></div>
-        </div>
-      </div>
-      <div class="card">
-        <h2>Milestones</h2>
-        <div id="overview-milestones"></div>
-      </div>
-      <div class="summary">
-        <h3>CREDIT BREAKDOWN</h3>
-        <div class="summary-stats">
-          <div class="summary-stat"><span>Total Required</span><span>36</span></div>
-          <div class="summary-stat"><span>Transferred</span><span id="sum-transferred">6</span></div>
-          <div class="summary-stat"><span>Completed</span><span id="sum-completed">0</span></div>
-          <div class="summary-stat"><span>In Progress</span><span id="sum-inprogress">0</span></div>
-          <div class="summary-stat"><span>Remaining</span><span id="sum-remaining">0</span></div>
-        </div>
-      </div>
+      <button class="tab active" onclick="showTab('calendar')">Calendar</button>
+      <button class="tab" onclick="showTab('phd')">PhD</button>
+      <button class="tab" onclick="showTab('projects')">Projects</button>
     </div>
 
     <!-- CALENDAR TAB -->
-    <div class="tab-content" id="tab-calendar">
+    <div class="tab-content active" id="tab-calendar">
       <div class="calendar-nav">
         <div style="display: flex; gap: 0.5rem;">
           <button id="view-year" class="active" onclick="setCalendarView('year')">Year</button>
@@ -256,13 +232,11 @@
         </div>
       </div>
 
-      <!-- Year View -->
       <div id="year-view">
         <div class="year-grid" id="year-grid"></div>
         <div id="month-detail-container"></div>
       </div>
 
-      <!-- Month View (hidden by default) -->
       <div id="month-view" style="display: none;">
         <div class="calendar-grid">
           <div class="calendar-day-header">Sun</div>
@@ -283,8 +257,8 @@
         <div class="legend-item"><div class="legend-dot" style="background: var(--green)"></div>Personal</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--orange)"></div>Work</div>
         <div class="legend-item"><div class="legend-dot" style="background: var(--yellow)"></div>Admin</div>
-        <div class="legend-item"><div class="legend-dot" style="background: var(--pink)"></div>Milestone</div>
       </div>
+
       <div class="agenda-section">
         <div class="card">
           <h2>Coming Up (Next 14 Days)</h2>
@@ -293,24 +267,53 @@
       </div>
     </div>
 
-    <!-- COURSES TAB -->
-    <div class="tab-content" id="tab-courses">
-      <div id="course-categories"></div>
-    </div>
-
-    <!-- DEADLINES TAB -->
-    <div class="tab-content" id="tab-deadlines">
+    <!-- PhD TAB -->
+    <div class="tab-content" id="tab-phd">
+      <!-- Progress Overview -->
       <div class="card">
-        <h2>All Deadlines</h2>
-        <div id="all-deadlines"></div>
+        <h2>PhD Progress</h2>
+        <div style="margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--muted); margin-bottom: 0.25rem;">
+            <span>Timeline</span>
+            <span id="phd-timeline-pct">0%</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="phd-timeline-bar" style="width: 0%"></div></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); margin-top: 0.25rem;">
+            <span id="phd-start">Fall 2024</span>
+            <span id="phd-end">Spring 2028</span>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="stat-row"><span>Credits</span><span id="phd-credits">0/36</span></div>
+          <div class="stat-row"><span>Transferred</span><span id="phd-transferred">0</span></div>
+          <div class="stat-row"><span>In Progress</span><span id="phd-inprogress">0</span></div>
+        </div>
+      </div>
+
+      <!-- Milestones -->
+      <div class="card">
+        <h2>Milestones</h2>
+        <div id="phd-milestones"></div>
+      </div>
+
+      <!-- Upcoming PhD Deadlines -->
+      <div class="card">
+        <h2>PhD Deadlines</h2>
+        <div id="phd-deadlines"></div>
+      </div>
+
+      <!-- Courses -->
+      <div class="card">
+        <h2>Courses</h2>
+        <div id="phd-courses"></div>
       </div>
     </div>
 
-    <!-- MILESTONES TAB -->
-    <div class="tab-content" id="tab-milestones">
-      <div class="card">
-        <h2>All Milestones</h2>
-        <div id="all-milestones"></div>
+    <!-- PROJECTS TAB -->
+    <div class="tab-content" id="tab-projects">
+      <div id="projects-list"></div>
+      <div class="empty-state" id="projects-empty" style="display: none;">
+        No projects yet. Ask Claude to add one!
       </div>
     </div>
 
@@ -322,8 +325,8 @@
   <script>
     const defaultData = {
       settings: {
-        startDate: "2025-08-01",
-        endDate: "2029-05-15",
+        startDate: "2024-08-01",
+        endDate: "2028-05-15",
         creditsRequired: 36
       },
       courseCategories: [
@@ -333,57 +336,20 @@
         { id: "600level", name: "600-Level Requirement", requiredCredits: 6 },
         { id: "seminar", name: "Seminar", requiredCredits: 3 }
       ],
-      courses: [
-        { name: "DSE 511: Data Sci & Computing I", category: "core", credits: 3, status: "in-progress", semester: "Fall 2025" },
-        { name: "DSE 512: Data Sci & Computing II", category: "core", credits: 3, status: "planned", semester: "" },
-        { name: "Data Analysis (CSCE 878)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
-        { name: "Statistics I (STAT 563)", category: "core", credits: 3, status: "in-progress", semester: "Fall 2025" },
-        { name: "Statistics II", category: "core", credits: 3, status: "planned", semester: "" },
-        { name: "Math/Numerical (STAT 801A)", category: "core", credits: 3, status: "transfer", semester: "Transfer" },
-        { name: "Adv Topics Data Mining (600-level)", category: "core", credits: 3, status: "planned", semester: "" },
-        { name: "COSC 524: NLP", category: "domain", credits: 3, status: "in-progress", semester: "Fall 2025" },
-        { name: "Domain Course 1", category: "domain", credits: 3, status: "planned", semester: "" },
-        { name: "Domain Course 2", category: "domain", credits: 3, status: "planned", semester: "" },
-        { name: "Ethics/Leadership/Communication 1", category: "breadth", credits: 3, status: "planned", semester: "" },
-        { name: "Ethics/Leadership/Communication 2", category: "breadth", credits: 3, status: "planned", semester: "" },
-        { name: "Additional 600-level", category: "600level", credits: 3, status: "planned", semester: "" },
-        { name: "DSE 599 (Fall 2025)", category: "seminar", credits: 1, status: "in-progress", semester: "Fall 2025" },
-        { name: "DSE 599 (Spring 2026)", category: "seminar", credits: 1, status: "planned", semester: "Spring 2026" },
-        { name: "DSE 599 (Fall 2026)", category: "seminar", credits: 1, status: "planned", semester: "Fall 2026" }
-      ],
-      deadlines: [
-        { name: "Fall 2025 Classes End", date: "2025-12-05" },
-        { name: "Spring 2026 Registration", date: "2026-01-10" },
-        { name: "Qualifying Exam", date: "2026-09-15" },
-        { name: "Annual Review", date: "2026-04-01" },
-        { name: "Proposal Defense", date: "2027-03-01" },
-        { name: "Final Defense", date: "2029-04-15" }
-      ],
-      milestones: [
-        { name: "First Semester Complete", completed: false },
-        { name: "Committee Formed", completed: false },
-        { name: "Qualifying Exam Passed", completed: false },
-        { name: "Proposal Defended", completed: false },
-        { name: "Dissertation Research", completed: false },
-        { name: "Final Defense", completed: false }
-      ],
-      // Events with optional time, category, and recurring
-      // category: deadline, academic, meeting, personal, work
-      // recurring: null, "weekly", "biweekly", "monthly"
-      events: [
-        { name: "Lab Meeting", date: "2025-12-13", time: "14:00", category: "meeting", recurring: "weekly" },
-        { name: "Advisor 1:1", date: "2025-12-12", time: "10:00", category: "meeting", recurring: "biweekly" }
-      ]
+      courses: [],
+      deadlines: [],
+      milestones: [],
+      events: [],
+      projects: []
     };
 
     let data = JSON.parse(localStorage.getItem('bryan-phd-data')) || defaultData;
-
-    // Ensure events array exists
     if (!data.events) data.events = [];
+    if (!data.projects) data.projects = [];
 
     let currentMonth = new Date().getMonth();
     let currentYear = new Date().getFullYear();
-    let calendarView = 'year'; // 'year' or 'month'
+    let calendarView = 'year';
     let selectedMonthDetail = null;
 
     function showTab(tabId) {
@@ -399,69 +365,92 @@
 
     function render() {
       renderHeader();
-      renderCourseCategories();
-      renderOverview();
-      renderDeadlines();
-      renderMilestones();
       renderCalendar();
+      renderPhD();
+      renderProjects();
     }
 
     function renderHeader() {
+      const today = new Date();
+      const allDeadlines = [...data.deadlines];
+      data.projects.forEach(p => {
+        if (p.deadlines) {
+          p.deadlines.forEach(d => allDeadlines.push(d));
+        }
+      });
+      const upcoming = allDeadlines
+        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
+        .filter(d => d.days >= 0)
+        .sort((a, b) => a.days - b.days);
+      document.getElementById('next-deadline-days').textContent = upcoming.length ? upcoming[0].days : '--';
+    }
+
+    // PhD Tab
+    function renderPhD() {
       const s = data.settings;
       const start = new Date(s.startDate);
       const end = new Date(s.endDate);
       const today = new Date();
       const pct = Math.min(100, Math.max(0, ((today - start) / (end - start)) * 100));
 
-      document.getElementById('timeline-bar').style.width = pct + '%';
-      document.getElementById('timeline-text').textContent = pct.toFixed(0) + '% complete';
+      document.getElementById('phd-timeline-bar').style.width = pct + '%';
+      document.getElementById('phd-timeline-pct').textContent = pct.toFixed(0) + '%';
+      document.getElementById('phd-start').textContent = start.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      document.getElementById('phd-end').textContent = end.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
       const completed = data.courses.filter(c => c.status === 'completed').reduce((s, c) => s + c.credits, 0);
       const transferred = data.courses.filter(c => c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
       const inProgress = data.courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
       const total = completed + transferred;
-      const remaining = Math.max(0, s.creditsRequired - total - inProgress);
 
-      document.getElementById('credits-stat').textContent = `${total}/${s.creditsRequired}`;
-      document.getElementById('transferred-stat').textContent = transferred;
-      document.getElementById('in-progress-stat').textContent = inProgress;
-      document.getElementById('remaining-stat').textContent = remaining;
-      document.getElementById('sum-transferred').textContent = transferred;
-      document.getElementById('sum-completed').textContent = completed;
-      document.getElementById('sum-inprogress').textContent = inProgress;
-      document.getElementById('sum-remaining').textContent = remaining;
+      document.getElementById('phd-credits').textContent = `${total}/${s.creditsRequired}`;
+      document.getElementById('phd-transferred').textContent = transferred;
+      document.getElementById('phd-inprogress').textContent = inProgress;
 
-      const upcoming = data.deadlines
+      // Milestones
+      document.getElementById('phd-milestones').innerHTML = data.milestones.length
+        ? data.milestones.map(m => `
+          <div class="milestone-item">
+            <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
+            <span style="font-size: 0.85rem;">${m.name}</span>
+          </div>
+        `).join('')
+        : '<div class="empty-state">No milestones defined</div>';
+
+      // Deadlines
+      const deadlines = data.deadlines
         .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
-        .filter(d => d.days >= 0)
+        .filter(d => d.days >= -30)
         .sort((a, b) => a.days - b.days);
-      document.getElementById('next-deadline-stat').textContent = upcoming.length ? upcoming[0].days : '--';
-    }
 
-    function renderCourseCategories() {
-      const container = document.getElementById('course-categories');
-      container.innerHTML = data.courseCategories.map(cat => {
+      document.getElementById('phd-deadlines').innerHTML = deadlines.length
+        ? deadlines.map(d => renderDeadlineItem(d)).join('')
+        : '<div class="empty-state">No deadlines</div>';
+
+      // Courses by category
+      document.getElementById('phd-courses').innerHTML = data.courseCategories.map(cat => {
         const courses = data.courses.filter(c => c.category === cat.id);
-        const completed = courses.filter(c => c.status === 'completed' || c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
-        const inProg = courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
+        if (courses.length === 0) return '';
+        const completedCr = courses.filter(c => c.status === 'completed' || c.status === 'transfer').reduce((s, c) => s + c.credits, 0);
+        const inProgCr = courses.filter(c => c.status === 'in-progress').reduce((s, c) => s + c.credits, 0);
 
         return `
           <div class="category" id="cat-${cat.id}">
             <div class="category-header" onclick="toggleCategory('${cat.id}')">
               <span class="category-title"><span class="arrow">▼</span> ${cat.name}</span>
-              <span class="category-credits">${completed}${inProg ? '+' + inProg : ''}/${cat.requiredCredits} cr</span>
+              <span class="category-credits">${completedCr}${inProgCr ? '+' + inProgCr : ''}/${cat.requiredCredits} cr</span>
             </div>
-            <div class="category-courses">
+            <div class="category-content">
               ${courses.map(c => {
                 const isCompleted = c.status === 'completed' || c.status === 'transfer';
                 return `
-                  <div class="course-row ${isCompleted ? 'completed' : ''}">
-                    <span class="course-title">${c.name}</span>
-                    <div class="course-meta">
+                  <div class="item-row ${isCompleted ? 'completed' : ''}">
+                    <span class="item-title">${c.name}</span>
+                    <div class="item-meta">
                       ${c.status === 'in-progress' ? '<span class="badge in-progress">IN PROGRESS</span>' : ''}
                       ${c.status === 'transfer' ? '<span class="badge transfer">TRANSFER</span>' : ''}
                       ${c.status === 'planned' && c.semester ? `<span class="badge planned">${c.semester}</span>` : ''}
-                      <span class="credits">${c.credits}cr</span>
+                      <span style="color: var(--green); font-weight: 600; font-size: 0.8rem;">${c.credits}cr</span>
                     </div>
                   </div>
                 `;
@@ -469,37 +458,12 @@
             </div>
           </div>
         `;
-      }).join('');
-    }
-
-    function renderOverview() {
-      const current = data.courses.filter(c => c.status === 'in-progress');
-      document.getElementById('current-courses').innerHTML = current.length
-        ? current.map(c => `<div class="course-row"><span class="course-title">${c.name}</span><span class="credits">${c.credits}cr</span></div>`).join('')
-        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No courses in progress</div>';
-
-      const today = new Date();
-      const upcoming = data.deadlines
-        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
-        .filter(d => d.days >= 0)
-        .sort((a, b) => a.days - b.days)
-        .slice(0, 4);
-
-      document.getElementById('upcoming-deadlines').innerHTML = upcoming.length
-        ? upcoming.map(d => renderDeadlineItem(d)).join('')
-        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No upcoming deadlines</div>';
-
-      document.getElementById('overview-milestones').innerHTML = data.milestones.map((m, i) => `
-        <div class="milestone-item">
-          <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
-          <span>${m.name}</span>
-        </div>
-      `).join('');
+      }).join('') || '<div class="empty-state">No courses added</div>';
     }
 
     function renderDeadlineItem(d) {
-      const urgency = d.days <= 14 ? 'red' : d.days <= 30 ? 'yellow' : 'green';
-      let remaining = d.days + 'd';
+      const urgency = d.days < 0 ? 'red' : d.days <= 14 ? 'red' : d.days <= 30 ? 'yellow' : 'green';
+      let remaining = d.days < 0 ? `${Math.abs(d.days)}d ago` : d.days + 'd';
       if (d.days > 365) remaining = (d.days / 365).toFixed(1) + 'yr';
       else if (d.days > 60) remaining = (d.days / 30).toFixed(1) + 'mo';
       const dateStr = new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -511,32 +475,56 @@
             <div class="deadline-name">${d.name}</div>
             <div class="deadline-date">${dateStr}</div>
           </div>
-          <div class="deadline-remaining">${remaining}</div>
+          <div class="deadline-remaining" style="color: var(--${urgency})">${remaining}</div>
         </div>
       `;
     }
 
-    function renderDeadlines() {
+    // Projects Tab
+    function renderProjects() {
+      if (!data.projects || data.projects.length === 0) {
+        document.getElementById('projects-list').innerHTML = '';
+        document.getElementById('projects-empty').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('projects-empty').style.display = 'none';
       const today = new Date();
-      const sorted = data.deadlines
-        .map(d => ({ ...d, days: Math.ceil((new Date(d.date) - today) / 86400000) }))
-        .sort((a, b) => a.days - b.days);
 
-      document.getElementById('all-deadlines').innerHTML = sorted.length
-        ? sorted.map(d => renderDeadlineItem(d)).join('')
-        : '<div style="color: var(--muted); padding: 1rem; text-align: center;">No deadlines</div>';
+      document.getElementById('projects-list').innerHTML = data.projects.map(p => {
+        const deadlinesHtml = p.deadlines && p.deadlines.length > 0
+          ? `<div class="project-deadlines">
+              <h4>Deadlines</h4>
+              ${p.deadlines.map(d => {
+                const days = Math.ceil((new Date(d.date) - today) / 86400000);
+                return renderDeadlineItem({ ...d, days });
+              }).join('')}
+            </div>`
+          : '';
+
+        return `
+          <div class="project-card">
+            <div class="project-header">
+              <div class="project-name">${p.name}</div>
+              <span class="badge ${p.status || 'active'}">${p.status || 'active'}</span>
+            </div>
+            ${p.goal ? `<div class="project-goal">${p.goal}</div>` : ''}
+            ${p.progress !== undefined ? `
+              <div class="project-progress">
+                <div class="project-progress-label">
+                  <span>Progress</span>
+                  <span>${p.progress}%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width: ${p.progress}%"></div></div>
+              </div>
+            ` : ''}
+            ${deadlinesHtml}
+          </div>
+        `;
+      }).join('');
     }
 
-    function renderMilestones() {
-      document.getElementById('all-milestones').innerHTML = data.milestones.map(m => `
-        <div class="milestone-item">
-          <div class="milestone-check ${m.completed ? 'done' : ''}">${m.completed ? '✓' : ''}</div>
-          <span>${m.name}</span>
-        </div>
-      `).join('');
-    }
-
-    // Calendar view toggle
+    // Calendar
     function setCalendarView(view) {
       calendarView = view;
       document.getElementById('view-year').classList.toggle('active', view === 'year');
@@ -557,23 +545,17 @@
       renderCalendar();
     }
 
-    // Get all events for a month (including recurring)
     function getAllEventsForMonth(year, month) {
       const events = [];
       const daysInMonth = new Date(year, month + 1, 0).getDate();
-
       for (let day = 1; day <= daysInMonth; day++) {
         const dateStr = formatDateStr(year, month, day);
         const dayEvents = getEventsForDate(dateStr);
-        dayEvents.forEach(e => {
-          events.push({ ...e, date: dateStr, day });
-        });
+        dayEvents.forEach(e => events.push({ ...e, date: dateStr, day }));
       }
-
       return events.sort((a, b) => a.day - b.day || (a.time || '99:99').localeCompare(b.time || '99:99'));
     }
 
-    // Render year view
     function renderYearView() {
       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const today = new Date();
@@ -603,11 +585,7 @@
       }
 
       document.getElementById('year-grid').innerHTML = html;
-
-      // Render month detail if selected
-      if (selectedMonthDetail !== null) {
-        renderMonthDetail(selectedMonthDetail);
-      }
+      if (selectedMonthDetail !== null) renderMonthDetail(selectedMonthDetail);
     }
 
     function showMonthDetail(month) {
@@ -632,7 +610,7 @@
               <h3>${monthNames[month]} ${currentYear}</h3>
               <button class="month-detail-close" onclick="showMonthDetail(${month})">×</button>
             </div>
-            <div style="color: var(--muted); padding: 1rem; text-align: center;">No events this month</div>
+            <div class="empty-state">No events this month</div>
           </div>
         `;
         return;
@@ -668,19 +646,29 @@
       `;
     }
 
-    // Calendar with recurring event support
     function getEventsForDate(dateStr) {
       const events = [];
       const targetDate = new Date(dateStr + 'T12:00:00');
 
-      // Add deadlines
+      // PhD deadlines
       data.deadlines.forEach(d => {
         if (d.date === dateStr) {
-          events.push({ name: d.name, category: 'deadline', time: null });
+          events.push({ name: d.name, category: d.category || 'deadline', time: null });
         }
       });
 
-      // Add events (with recurring logic)
+      // Project deadlines
+      data.projects.forEach(p => {
+        if (p.deadlines) {
+          p.deadlines.forEach(d => {
+            if (d.date === dateStr) {
+              events.push({ name: `${p.name}: ${d.name}`, category: 'work', time: null });
+            }
+          });
+        }
+      });
+
+      // Events (with recurring)
       data.events.forEach(e => {
         if (e.date === dateStr) {
           events.push({ name: e.name, category: e.category || 'meeting', time: e.time });
@@ -689,11 +677,9 @@
           if (targetDate >= eventDate) {
             const daysDiff = Math.floor((targetDate - eventDate) / 86400000);
             let matches = false;
-
             if (e.recurring === 'weekly' && daysDiff % 7 === 0) matches = true;
             if (e.recurring === 'biweekly' && daysDiff % 14 === 0) matches = true;
             if (e.recurring === 'monthly' && targetDate.getDate() === eventDate.getDate()) matches = true;
-
             if (matches) {
               events.push({ name: e.name, category: e.category || 'meeting', time: e.time, recurring: true });
             }
@@ -734,21 +720,15 @@
       const today = new Date().toISOString().split('T')[0];
 
       let html = '';
-
-      // Previous month
       for (let i = firstDay - 1; i >= 0; i--) {
         const day = daysInPrevMonth - i;
         const dateStr = formatDateStr(currentYear, currentMonth - 1, day);
         html += renderCalendarDay(day, dateStr, true, today);
       }
-
-      // Current month
       for (let day = 1; day <= daysInMonth; day++) {
         const dateStr = formatDateStr(currentYear, currentMonth, day);
         html += renderCalendarDay(day, dateStr, false, today);
       }
-
-      // Next month
       const totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
       const remaining = totalCells - (firstDay + daysInMonth);
       for (let day = 1; day <= remaining; day++) {
@@ -786,12 +766,7 @@
         eventsHtml += `<div class="more-events">+${events.length - maxShow} more</div>`;
       }
 
-      return `
-        <div class="${classes}">
-          <span class="day-number">${day}</span>
-          <div class="day-events">${eventsHtml}</div>
-        </div>
-      `;
+      return `<div class="${classes}"><span class="day-number">${day}</span><div class="day-events">${eventsHtml}</div></div>`;
     }
 
     function renderAgenda() {
@@ -810,7 +785,7 @@
       }
 
       if (days.length === 0) {
-        document.getElementById('agenda-list').innerHTML = '<div style="color: var(--muted); padding: 1rem; text-align: center;">No events in the next 14 days</div>';
+        document.getElementById('agenda-list').innerHTML = '<div class="empty-state">No events in the next 14 days</div>';
         return;
       }
 
@@ -830,7 +805,6 @@
         `;
       }).join('');
     }
-
 
     render();
   </script>
