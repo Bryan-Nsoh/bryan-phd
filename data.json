@@ -4,7 +4,7 @@
     "concentration": "Data Science & Engineering",
     "startDate": "2024-08-01",
     "endDate": "2028-05-15",
-    "creditsRequired": 48
+    "creditsRequired": 36
   },
   "courses": [
     { "name": "DSE 512 - Foundations of Data Science", "credits": 3, "semester": "Fall 2024", "grade": "A" },
@@ -12,17 +12,30 @@
     { "name": "COSC 526 - Machine Learning", "credits": 3, "semester": "Fall 2024", "grade": "B+" }
   ],
   "deadlines": [
-    { "name": "Committee Meeting", "date": "2025-12-20" },
-    { "name": "Spring Registration", "date": "2026-01-10" },
-    { "name": "Qualifying Exam", "date": "2026-03-15" },
-    { "name": "Proposal Defense", "date": "2027-03-01" }
+    { "name": "Form Doctoral Committee", "date": "2025-02-28", "category": "milestone" },
+    { "name": "Qualifying Exam", "date": "2025-08-01", "category": "milestone" },
+    { "name": "Annual Review 2025", "date": "2025-04-15", "category": "admin" },
+    { "name": "Summer 2025 Registration", "date": "2025-04-01", "category": "admin" },
+    { "name": "Fall 2025 Registration", "date": "2025-04-15", "category": "admin" },
+    { "name": "Annual Review 2026", "date": "2026-04-15", "category": "admin" },
+    { "name": "Comprehensive Exam", "date": "2027-03-15", "category": "milestone" },
+    { "name": "Annual Review 2027", "date": "2027-04-15", "category": "admin" },
+    { "name": "Grad School Forms Due", "date": "2028-01-26", "category": "deadline" },
+    { "name": "Dissertation Defense", "date": "2028-04-01", "category": "milestone" },
+    { "name": "TRACE Final Submission", "date": "2028-04-30", "category": "deadline" }
   ],
   "milestones": [
     { "name": "Coursework Phase 1", "completed": true },
     { "name": "Committee Formed", "completed": false },
     { "name": "Qualifying Exam", "completed": false },
+    { "name": "Comprehensive Exam", "completed": false },
     { "name": "Proposal Defense", "completed": false },
     { "name": "Dissertation Research", "completed": false },
     { "name": "Final Defense", "completed": false }
+  ],
+  "events": [
+    { "name": "Advisor 1:1", "date": "2025-01-09", "time": "10:00", "category": "meeting", "recurring": "weekly" },
+    { "name": "Lab Meeting", "date": "2025-01-10", "time": "14:00", "category": "meeting", "recurring": "weekly" },
+    { "name": "DSE 599 Seminar", "date": "2025-01-13", "time": "12:00", "category": "academic", "recurring": "weekly" }
   ]
 }
